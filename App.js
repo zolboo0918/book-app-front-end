@@ -1,21 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import React from "react";
+import { UserStore } from "./src/contexts/UserContext";
+import MyStackNavigator from "./src/navigation/MyStackNavigator";
 
 export default function App() {
+  const [fontLoaded] = useFonts({
+    MonCricket: require("./assets/fonts/MonCricket.ttf"),
+  });
+  if (!fontLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <NavigationContainer>
+        <UserStore>
+          <MyStackNavigator />
+        </UserStore>
+      </NavigationContainer>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
