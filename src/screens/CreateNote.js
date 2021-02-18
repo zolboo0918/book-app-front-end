@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import MyNoteButton from "../components/MyNoteButton";
+import SuccessModal from "../components/SuccessModal";
 
 const CreateNote = () => {
+  const [successModalShow, setSuccessModalShow] = useState(false);
   const navigation = useNavigation();
   return (
     <ScrollView>
@@ -37,9 +39,13 @@ const CreateNote = () => {
           <MyNoteButton title="Буцах" onPress={() => navigation.goBack()} />
           <MyNoteButton
             title="Хадгалах"
-            onPress={() => console.log("haraal idmeriig hadgallaa")}
+            onPress={() => setSuccessModalShow(true)}
           />
         </View>
+        <SuccessModal
+          modalVisible={successModalShow}
+          hide={setSuccessModalShow}
+        />
       </View>
     </ScrollView>
   );

@@ -54,6 +54,5 @@ const css = StyleSheet.create({
     position: "absolute",
     right: "10%",
     bottom: "20%",
-    backgroundColor: "red",
   },
 });

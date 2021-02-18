@@ -34,7 +34,6 @@ const NoteItem = () => {
               </View>
               <Text style={css.bottomText}>Он сар өдөр</Text>
             </View>
-            {/* <MyButton onPress={() => navigation.navigate("NoteDetails")} /> */}
           </View>
         </View>
       </ScrollView>

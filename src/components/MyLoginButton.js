@@ -15,7 +15,7 @@ const MyButton = (props) => {
       >
         <View>
           <AntDesign
-            name="arrowright"
+            name={props.iconName}
             size={24}
             color="white"
             style={{ textAlign: "center" }}

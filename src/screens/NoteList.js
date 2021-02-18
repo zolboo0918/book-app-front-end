@@ -1,15 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import EmptyNote from "../components/EmptyNote";
 import NoteItem from "../components/NoteItem";
 
 const NoteList = () => {
   return (
-    <View>
-      <NoteItem />
+    <View style={css.container}>
+      <ScrollView>
+        <NoteItem />
+
+        {/* <EmptyNote /> */}
+      </ScrollView>
     </View>
   );
 };
 
 export default NoteList;
 
-const styles = StyleSheet.create({});
+const css = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

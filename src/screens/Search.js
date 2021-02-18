@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -17,6 +18,7 @@ const Search = () => {
   const [value, setValue] = useState("");
   const [isMongolianBook, setIsMongolianBook] = useState(true);
   const [
+    loading,
     searchedBook,
     foreignBooks,
     searchMongolianBook,
@@ -64,68 +66,74 @@ const Search = () => {
             onIconPress={onCloseIconPress}
             pressCircle={pressCircle}
           />
-          {isMongolianBook
-            ? searchedBook.map((el) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("Detail", { item: el })}
-                    key={el._id}
-                  >
-                    <View style={css.itemWrapper}>
-                      <Image
-                        source={{ uri: `${el.cover}` }}
-                        style={css.itemImage}
-                        resizeMode="center"
-                      />
-                      <View style={css.itemRight}>
-                        <Text style={css.title}>{el.title}</Text>
-                        <Text style={css.publisher}>{el.publisher.name}</Text>
-                        <View style={css.itemStar}>
-                          <StarRating
-                            disabled={true}
-                            rating={el.rating}
-                            fullStarColor={"#E8BD0D"}
-                            starSize={20}
-                          />
-                        </View>
+          {loading ? (
+            <View style={css.loader}>
+              <ActivityIndicator size="large" color="##3A8096" />
+            </View>
+          ) : isMongolianBook ? (
+            searchedBook.map((el) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Detail", { item: el })}
+                  key={el._id}
+                >
+                  <View style={css.itemWrapper}>
+                    <Image
+                      source={{ uri: `${el.cover}` }}
+                      style={css.itemImage}
+                      resizeMode="center"
+                    />
+                    <View style={css.itemRight}>
+                      <Text style={css.title}>{el.title}</Text>
+                      <Text style={css.publisher}>{el.publisher.name}</Text>
+                      <View style={css.itemStar}>
+                        <StarRating
+                          disabled={true}
+                          rating={el.rating}
+                          fullStarColor={"#E8BD0D"}
+                          starSize={20}
+                        />
                       </View>
                     </View>
-                  </TouchableOpacity>
-                );
-              })
-            : foreignBooks.map((el) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("Detail", {
-                        item: el,
-                        isForeign: true,
-                      })
-                    }
-                    key={el._id}
-                  >
-                    <View style={css.itemWrapper}>
-                      <Image
-                        source={{ uri: `${el.cover}` }}
-                        style={css.itemImage}
-                        resizeMode="center"
-                      />
-                      <View style={css.itemRight}>
-                        <Text style={css.title}>{el.title}</Text>
-                        <Text style={css.publisher}>{el.publisher.name}</Text>
-                        <View style={css.itemStar}>
-                          <StarRating
-                            disabled={true}
-                            rating={el.rating}
-                            fullStarColor={"#E8BD0D"}
-                            starSize={20}
-                          />
-                        </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
+          ) : (
+            foreignBooks.map((el) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Detail", {
+                      item: el,
+                      isForeign: true,
+                    })
+                  }
+                  key={el._id}
+                >
+                  <View style={css.itemWrapper}>
+                    <Image
+                      source={{ uri: `${el.cover}` }}
+                      style={css.itemImage}
+                      resizeMode="center"
+                    />
+                    <View style={css.itemRight}>
+                      <Text style={css.title}>{el.title}</Text>
+                      <Text style={css.publisher}>{el.publisher.name}</Text>
+                      <View style={css.itemStar}>
+                        <StarRating
+                          disabled={true}
+                          rating={el.rating}
+                          fullStarColor={"#E8BD0D"}
+                          starSize={20}
+                        />
                       </View>
                     </View>
-                  </TouchableOpacity>
-                );
-              })}
+                  </View>
+                </TouchableOpacity>
+              );
+            })
+          )}
         </View>
       </ScrollView>
     </>
@@ -154,5 +162,10 @@ const css = StyleSheet.create({
   },
   publisher: {
     fontSize: 11,
+  },
+  loader: {
+    marginTop: "50%",
+    // alignSelf: "center",
+    // justifyContent: "center",
   },
 });

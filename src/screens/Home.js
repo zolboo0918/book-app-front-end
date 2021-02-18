@@ -1,15 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import BookGroup from "../components/BookGroup";
+import ConfirmModal from "../components/ConfirmModal";
 import TopBar from "../components/TopBar";
 import UserContext from "../contexts/UserContext";
 
 export default function Home(props) {
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
   const navigation = useNavigation();
   const state = useContext(UserContext);
 
   const handleLogOut = () => {
+    setConfirmModalShow(true);
     state.logOut();
   };
 
@@ -32,6 +35,11 @@ export default function Home(props) {
         <BookGroup title="Шинэ номууд" />
         <BookGroup title="Үнэлгээ өндөр номууд" />
       </ScrollView>
+
+      <ConfirmModal
+        confirmModalVisible={confirmModalShow}
+        hide={setConfirmModalShow}
+      />
     </View>
   );
 }

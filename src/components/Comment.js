@@ -1,6 +1,12 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import UserContext from "../contexts/UserContext";
 import useComment from "../hooks/useComment";
 import CommentItem from "./CommentItem";
@@ -34,7 +40,9 @@ const Comment = (props) => {
         />
         <MySendButton onPress={writeComment} iconName="paper-plane" />
       </View>
-      {comments.length > 0 ? (
+      {loading ? (
+        <ActivityIndicator size="large" color="##3A8096" style={css.loader} />
+      ) : comments.length > 0 ? (
         comments.map((item) => (
           <View key={item._id}>
             <CommentItem
@@ -88,4 +96,5 @@ const css = StyleSheet.create({
   commentText: {
     color: "#D8D8D8",
   },
+  loader: { marginTop: "20%" },
 });

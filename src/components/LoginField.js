@@ -1,9 +1,17 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useContext } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
 
 const LoginField = (props) => {
+  const state = useContext(UserContext);
   return (
     <View style={css.flex} behavior="height">
       <View style={css.row}>
@@ -25,7 +33,11 @@ const LoginField = (props) => {
             />
           </View>
         </View>
-        <MyButton onPress={props.handleLogin} />
+        {state.loading ? (
+          <ActivityIndicator size="large" color="##3A8096" style={css.loader} />
+        ) : (
+          <MyButton iconName="arrowright" onPress={props.handleLogin} />
+        )}
       </View>
 
       <TouchableOpacity

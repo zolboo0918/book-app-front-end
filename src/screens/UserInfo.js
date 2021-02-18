@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -11,29 +11,30 @@ import EditUserInfoBottomModal from "../components/EditUserInfoBottomModal";
 import MySendButton from "../components/MySendButton";
 import ProfileItem from "../components/ProfileItem";
 import RBSheet from "react-native-raw-bottom-sheet";
+import SuccessModal from "../components/SuccessModal";
 
 const UserInfo = () => {
+  const [successModalShow, setSuccessModalShow] = useState(false);
   const editInfoRef = useRef();
   const editPasswordRef = useRef();
 
   const handleInfoSave = () => {
-    console.log("medeelliig chin zaschlaa 3k");
+    setSuccessModalShow(true);
   };
 
   const passwordSave = () => {
-    console.log("passwordiig chin solij ugluu 5k");
+    setSuccessModalShow(true);
   };
 
   const passwordChange = () => {
-    // editPasswordRef.current.open();
-    console.log("haraal idsen nuuts ug solih tovch ni daragdlaa");
+    editPasswordRef.current.open();
   };
 
   return (
     <SafeAreaView style={css.container}>
       <ScrollView>
         <ImageBackground
-          source={require("../../assets/images/top.png")}
+          source={require("../../assets/images/top3.png")}
           style={css.backgroundImage}
           resizeMode="stretch"
         >
@@ -115,6 +116,10 @@ const UserInfo = () => {
           onSave={passwordSave}
         />
       </RBSheet>
+      <SuccessModal
+        modalVisible={successModalShow}
+        hide={setSuccessModalShow}
+      />
     </SafeAreaView>
   );
 };
@@ -127,7 +132,7 @@ const css = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: "50%",
+    height: "100%",
   },
   profileImage: {
     borderWidth: 1,
@@ -147,10 +152,5 @@ const css = StyleSheet.create({
   },
   button: {
     alignSelf: "flex-end",
-  },
-  modalContainer: {
-    height: "60%",
-    backgroundColor: "white",
-    bottom: 0,
   },
 });

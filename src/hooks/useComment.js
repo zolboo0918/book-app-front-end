@@ -92,7 +92,6 @@ export default (id, comment, isForeign) => {
   };
 
   const updateComment = (commentId) => {
-    console.log("haraal idsen editedComment", editedComment);
     const url = isForeign
       ? `https://bookappapi.herokuapp.com/api/v1/foreignbookComments/${commentId}`
       : `https://bookappapi.herokuapp.com/api/v1/comments/${commentId}`;

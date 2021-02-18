@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 const MySendButton = (props) => {
   return (
     <TouchableOpacity onPress={props.onPress} style={css.border}>
-      <Entypo name={props.iconName} size={18} color="white" />
+      <FontAwesome name={props.iconName} size={18} color="white" />
     </TouchableOpacity>
   );
 };

@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import StarRating from "react-native-star-rating-new";
 import Comment from "../components/Comment";
 import TopBar from "../components/TopBar";
@@ -87,6 +94,7 @@ const BookDetail = (props) => {
           <Text style={css.title}>Тайлбар</Text>
           <Text style={css.description}>{description}</Text>
         </View>
+
         <Comment comments={comment} id={_id} isForeign={isForeign} />
       </ScrollView>
     </>
