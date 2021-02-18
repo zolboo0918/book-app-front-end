@@ -1,16 +1,19 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 const MyInputField = (props) => {
   const { style, type } = props;
   return (
-    <TextInput
-      {...props}
-      style={[css.input, style]}
-      secureTextEntry={type == "password"}
-      keyboardAppearance="default"
-      onChangeText={(val) => props.onChangeText(val.trim())}
-    />
+    <View>
+      <TextInput
+        {...props}
+        style={[css.input, style]}
+        secureTextEntry={type == "password"}
+        keyboardAppearance="default"
+        onChangeText={props.onChangeText}
+      />
+      {props.error && <Text style={css.error}>{props.errorText}</Text>}
+    </View>
   );
 };
 
@@ -18,12 +21,16 @@ export default MyInputField;
 
 const css = StyleSheet.create({
   input: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "MonCricket",
     color: "#887F7F",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderBottomColor: "#887F7F",
     width: "90%",
+  },
+  error: {
+    color: "red",
+    marginLeft: "5%",
   },
 });

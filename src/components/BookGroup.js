@@ -1,9 +1,9 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import data from "../data/book";
+// import data from "../data/book";
 import BookItem from "./BookItem";
 
-const BookGroup = ({ title }) => {
+const BookGroup = ({ title, data }) => {
   return (
     <View>
       <Text style={css.title}>{title}</Text>

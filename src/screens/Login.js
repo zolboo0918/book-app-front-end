@@ -10,8 +10,8 @@ import LoginField from "../components/LoginField";
 import UserContext from "../contexts/UserContext";
 
 export default function Login({ navigation }) {
-  const [emailValue, setEmailValue] = useState("zolboo412@gmail.com");
-  const [passwordValue, setPasswordValue] = useState("123456");
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
   const [error, setError] = useState("");
 
   const state = useContext(UserContext);

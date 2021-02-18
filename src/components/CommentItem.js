@@ -49,7 +49,7 @@ const CommentItem = (props) => {
         </Text>
       </View>
 
-      {userId._id == state.userId ? (
+      {userId._id == state.userInfo._id ? (
         !edit && !post ? (
           <TouchableOpacity onPress={() => setEdit(true)} style={css.myButton}>
             <Feather name="more-horizontal" size={18} color="#3A8096" />

@@ -46,7 +46,7 @@ export default (id, comment, isForeign) => {
     axios
       .post(
         url,
-        { comment: writedComment, userId: state.userId },
+        { comment: writedComment, userId: state.userInfo._id },
         { headers: { Authorization: `Bearer ${state.token}` } }
       )
       .then((res) => {

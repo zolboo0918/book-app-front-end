@@ -29,11 +29,6 @@ export default function Register({ navigation }) {
 }
 
 const css = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     // backgroundColor: "yellow",
-  //   },
-
   wrapper: {
     flex: 1,
     justifyContent: "center",
@@ -49,6 +44,7 @@ const css = StyleSheet.create({
     fontSize: 35,
     textAlign: "center",
     justifyContent: "center",
-    marginVertical: "30%",
+    marginTop: "30%",
+    marginBottom: "20%",
   },
 });

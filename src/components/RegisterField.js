@@ -1,54 +1,197 @@
-import React from "react";
+import { AntDesign } from "@expo/vector-icons";
+import React, { useContext, useState } from "react";
 import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
-  View,
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
+  View,
 } from "react-native";
-import MyButton from "./MyLoginButton";
+import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
-import { AntDesign } from "@expo/vector-icons";
+import MyButton from "./MyLoginButton";
 
 const RegisterField = (props) => {
+  const [firstName, setFirstName] = useState("aa");
+  const [lastName, setLastName] = useState("bb");
+  const [email, setEmail] = useState("aa@gmail.com");
+  const [phone, setPhone] = useState("88888888");
+  const [password1, setPassword1] = useState("111111");
+  const [password2, setPassword2] = useState("");
+
+  const [error, setError] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordLengthError, setPasswordLengthError] = useState("");
+  const [passwordTypeError, setPasswordTypeError] = useState("");
+
+  const state = useContext(UserContext);
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  const handleRegister = () => {
+    const userInfo = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      password: password1,
+    };
+
+    console.log("userinfo ", userInfo);
+
+    state.register(userInfo);
+  };
+
+  const emailChecker = (val) => {
+    setEmail(val);
+    if (val == "") {
+      setEmailError("");
+      setError(false);
+    } else if (!validateEmail(val)) {
+      setError(true);
+      setEmailError("Имэйл буруу байна");
+    } else {
+      setEmailError("");
+      setError(false);
+    }
+  };
+
+  const phoneChecker = (val) => {
+    setPhone(val);
+    if (val == "") {
+      setPhoneError("");
+      setError(false);
+    } else if (val.length < 8) {
+      setError(true);
+      setPhoneError("Гар утасын дугаар буруу байна");
+    } else {
+      setPhoneError("");
+      setError(false);
+    }
+  };
+  const passwordLengthChecker = (val) => {
+    setPassword1(val);
+    if (val == "") {
+      setPasswordLengthError("");
+      setError(false);
+    } else if (val.length < 6) {
+      setError(true);
+      setPasswordLengthError("Нууц үгийн урт 6-аас доошгүй байна");
+    } else {
+      setPasswordLengthError("");
+      setError(false);
+    }
+  };
+
+  const passwordSameChecker = (val) => {
+    setPassword2(val);
+    if (password2 == "") {
+      setPasswordTypeError("");
+      setError(false);
+    } else if (password1 != val) {
+      setError(true);
+      setPasswordTypeError("Нууц үг ижил биш байна");
+    } else {
+      setPasswordTypeError("");
+      setError(false);
+    }
+  };
+
   return (
     <KeyboardAvoidingView behavior="padding" style={css.flex}>
-      <View style={css.row}>
-        <View style={css.wrapper}>
-          <MyInputField
-            style={{ borderBottomWidth: 1 }}
-            placeholder="Хэрэглэгчийн нэр"
-            type="username"
-          />
-          <MyInputField
-            placeholder="Имэйл"
-            style={{ borderBottomWidth: 1 }}
-            type="email-address"
-            keyboardType="email-address"
-          />
-          <MyInputField
-            style={{ borderBottomWidth: 1 }}
-            placeholder="Нууц үг"
-            type="password"
-          />
-          <MyInputField placeholder="Нууц үг давт" type="password" />
-        </View>
-        <MyButton onPress={props.handleLogin} />
-      </View>
-      <View style={css.register}>
-        <TouchableOpacity onPress={() => props.onBackPress()}>
-          <View style={{ flexDirection: "row" }}>
-            <AntDesign
-              name="arrowleft"
-              size={16}
-              color="#FF4B31"
-              style={css.arrow}
+      <ScrollView scrollIndicatorInsets={false}>
+        <View style={css.row}>
+          <View style={css.wrapper}>
+            <MyInputField
+              placeholder="Хэрэглэгчийн нэр"
+              type="username"
+              value={firstName}
+              onChangeText={(val) => setFirstName(val)}
+              style={{ borderBottomWidth: 1 }}
             />
-            <Text style={css.registerText}>Нэвтрэх</Text>
+            <MyInputField
+              placeholder="Хэрэглэгчийн Овог"
+              type="username"
+              value={lastName}
+              onChangeText={(val) => setLastName(val)}
+              style={{ borderBottomWidth: 1 }}
+            />
+            <MyInputField
+              placeholder="Имэйл"
+              type="email-address"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={(val) => emailChecker(val)}
+              error={error}
+              errorText={emailError}
+              style={{ borderBottomWidth: 1 }}
+            />
+
+            <MyInputField
+              placeholder="Утасны дугаар"
+              type="phone"
+              keyboardType="number-pad"
+              value={phone}
+              onChangeText={(val) => phoneChecker(val)}
+              error={error}
+              errorText={phoneError}
+              style={{ borderBottomWidth: 1 }}
+            />
+
+            <MyInputField
+              placeholder="Нууц үг"
+              type="password"
+              value={password1}
+              onChangeText={(val) => passwordLengthChecker(val)}
+              error={error}
+              errorText={passwordLengthError}
+              style={{ borderBottomWidth: 1 }}
+            />
+
+            <MyInputField
+              placeholder="Нууц үг давт"
+              type="password"
+              value={password2}
+              onChangeText={passwordSameChecker}
+              error={error}
+              errorText={passwordTypeError}
+              style={{ marginBottom: 10, borderBottomWidth: 1 }}
+            />
           </View>
-        </TouchableOpacity>
-      </View>
+          {state.loading ? (
+            <ActivityIndicator
+              size="large"
+              color="##3A8096"
+              style={css.loader}
+            />
+          ) : (
+            <MyButton
+              disabled={error}
+              iconName="arrowright"
+              onPress={handleRegister}
+            />
+          )}
+        </View>
+        <View style={css.register}>
+          <TouchableOpacity onPress={() => props.onBackPress()}>
+            <View style={{ flexDirection: "row" }}>
+              <AntDesign
+                name="arrowleft"
+                size={16}
+                color="#FF4B31"
+                style={css.arrow}
+              />
+              <Text style={css.registerText}>Нэвтрэх</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
