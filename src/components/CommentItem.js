@@ -23,11 +23,10 @@ const CommentItem = (props) => {
   const handleUpdate = () => {
     setIsEditable(true);
     setPost(true);
-    props.onUpdate();
   };
 
   return (
-    <KeyboardAvoidingView style={css.writeComment} behavior="height">
+    <KeyboardAvoidingView style={css.writeComment} behavior="padding">
       <View style={css.userIcon}>
         <Feather name="user" size={24} color="black" />
         <Text style={css.user}>{userId.firstName}</Text>
@@ -39,14 +38,20 @@ const CommentItem = (props) => {
           editable={isEditable}
           autoCorrect={false}
           autoCapitalize="none"
-          onChangeText={(val) => props.onChangeText(comment)}
+          onChangeText={(val) => props.onChangeText(val)}
         />
         <Text style={css.date}>
           {date.getFullYear() +
             "-" +
             (date.getMonth() + 1) +
             "-" +
-            date.getDate()}
+            date.getDate() +
+            " " +
+            date.getHours() +
+            ":" +
+            date.getMinutes() +
+            ":" +
+            date.getSeconds()}
         </Text>
       </View>
 
@@ -117,6 +122,7 @@ const css = StyleSheet.create({
     fontSize: 13,
     fontFamily: PRIMARY_FONT,
     color: "black",
+    paddingVertical: 5,
   },
   date: {
     fontSize: 11,

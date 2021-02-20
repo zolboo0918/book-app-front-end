@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
+import { validateEmail } from "../../constants";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,11 @@ const ForgetPassword = () => {
   const getCode = () => {
     if (email === "") {
       Alert.alert("Имэйл оруулна уу");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Alert.alert("Имэйл буруу байна");
       return;
     }
 
@@ -44,6 +50,7 @@ const ForgetPassword = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        Alert.alert("Алдаа гарлаа");
       });
   };
 
@@ -63,10 +70,8 @@ const ForgetPassword = () => {
       })
       .catch((err) => {
         console.log(err);
-        setLoadings(false);
-        Alert.alert("Амжилтгүй", "", [
-          { text: "", onPress: () => navigation.navigate("Login") },
-        ]);
+        setLoading(false);
+        Alert.alert("Код буруу байна");
       });
   };
 

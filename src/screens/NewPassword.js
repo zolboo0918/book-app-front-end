@@ -25,6 +25,11 @@ const NewPassword = (props) => {
   console.log("props", props);
 
   const changePassword = () => {
+    if (password1 === "" || password2 === "") {
+      Alert.alert("Талбаруудыг бүрэн бөглөнө үү");
+      return;
+    }
+
     if (password1 !== password2) {
       Alert.alert("Нууц үг тохирохгүй байна");
       return;

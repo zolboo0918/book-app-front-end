@@ -47,10 +47,14 @@ export default (id, comment, isForeign) => {
   };
 
   const postComment = (url) => {
+    const date = new Date(Date.now());
     axios
       .post(
         url,
-        { comment: writedComment, userId: state.userInfo._id },
+        {
+          comment: writedComment,
+          userId: state.userInfo._id,
+        },
         { headers: { Authorization: `Bearer ${state.token}` } }
       )
       .then((res) => {

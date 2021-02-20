@@ -98,7 +98,10 @@ const LoginField = (props) => {
         )}
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("ForgetPassword")}
+        style={css.bottom}
+      >
         <Text style={css.text}>Нууц үг мартсан</Text>
       </TouchableOpacity>
       <View style={css.register}>
@@ -120,7 +123,6 @@ const css = StyleSheet.create({
     flex: 0.6,
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "yellow",
     marginBottom: "-20%",
   },
   wrapper: {
@@ -130,8 +132,6 @@ const css = StyleSheet.create({
     borderBottomWidth: 4,
     borderColor: "#b2bec3",
     width: "90%",
-    height: "35%",
-    // backgroundColor: "green",
   },
   text: {
     color: "#887F7F",
@@ -150,12 +150,15 @@ const css = StyleSheet.create({
     backgroundColor: "#FAFAFA",
     flex: 0.05,
     marginVertical: "10%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   registerText: {
     color: "#FF4B31",
     fontFamily: PRIMARY_FONT,
-    fontSize: 16,
-    alignSelf: "center",
-    lineHeight: 25,
+    fontSize: 13,
+  },
+  bottom: {
+    marginTop: "15%",
   },
 });

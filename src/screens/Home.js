@@ -7,6 +7,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import TopBar from "../components/TopBar";
 import UserContext from "../contexts/UserContext";
 import useCategories from "../hooks/useCategories";
+import Toast from "react-native-toast-message";
 
 export default function Home(props) {
   const [confirmModalShow, setConfirmModalShow] = useState(false);
@@ -14,6 +15,13 @@ export default function Home(props) {
   const state = useContext(UserContext);
 
   const [newbooks, topRatedBook, bestSeller] = useCategories();
+
+  useEffect(() => {
+    Toast.show({
+      text1: "Hello",
+      text2: "This is some something 👋",
+    });
+  }, []);
 
   const handleLogOut = () => {
     setConfirmModalShow(true);

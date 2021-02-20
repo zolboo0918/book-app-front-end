@@ -11,6 +11,7 @@ import { PRIMARY_FONT } from "../../constants";
 import UserContext from "../contexts/UserContext";
 import useComment from "../hooks/useComment";
 import CommentItem from "./CommentItem";
+import ConfirmModal from "./ConfirmModal";
 import MySendButton from "./MySendButton";
 
 const Comment = (props) => {
@@ -25,6 +26,8 @@ const Comment = (props) => {
     deleteComment,
     updateComment,
   ] = useComment(props.id, props.comment, props.isForeign);
+
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
 
   return (
     <View style={css.container}>
@@ -44,14 +47,25 @@ const Comment = (props) => {
       {loading ? (
         <ActivityIndicator size="large" color="##3A8096" style={css.loader} />
       ) : comments.length > 0 ? (
-        comments.map((item) => (
-          <View key={item._id}>
+        comments.map((item, index) => (
+          <View key={item ? item._id : index}>
             <CommentItem
               editedComment={editedComment}
               comment={item}
               onChangeText={setEditedComment}
-              onDelete={() => deleteComment(item._id)}
+              onDelete={() => setConfirmModalShow(true)}
               onUpdate={() => updateComment(item._id)}
+            />
+            <ConfirmModal
+              confirmModalVisible={confirmModalShow}
+              hide={setConfirmModalShow}
+              getResult={(res) => {
+                if (res) {
+                  deleteComment(item._id);
+                } else {
+                  setConfirmModalShow(false);
+                }
+              }}
             />
           </View>
         ))
