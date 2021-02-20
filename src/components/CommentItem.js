@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import UserContext from "../contexts/UserContext";
 import MySendButton from "./MySendButton";
 
@@ -52,7 +53,7 @@ const CommentItem = (props) => {
       {userId._id == state.userInfo._id ? (
         !edit && !post ? (
           <TouchableOpacity onPress={() => setEdit(true)} style={css.myButton}>
-            <Feather name="more-horizontal" size={18} color="#3A8096" />
+            <Feather name="more-horizontal" size={18} color={PRIMARY_COLOR} />
           </TouchableOpacity>
         ) : edit && !post ? (
           <>
@@ -63,7 +64,7 @@ const CommentItem = (props) => {
             </View>
             <View style={css.delete}>
               <TouchableOpacity onPress={handleUpdate}>
-                <Feather name="edit" size={18} color="#3A8096" />
+                <Feather name="edit" size={18} color={PRIMARY_COLOR} />
               </TouchableOpacity>
             </View>
           </>
@@ -114,7 +115,7 @@ const css = StyleSheet.create({
   },
   comment: {
     fontSize: 13,
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     color: "black",
   },
   date: {

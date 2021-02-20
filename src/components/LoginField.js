@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -9,9 +9,61 @@ import {
 import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
+import { PRIMARY_FONT, validateEmail } from "../../constants";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginField = (props) => {
   const state = useContext(UserContext);
+  const [emailValue, setEmailValue] = useState("zolboo412@gmail.com");
+  const [passwordValue, setPasswordValue] = useState("123456");
+
+  const [error, setError] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const navigation = useNavigation();
+
+  const hangleLogIn = () => {
+    if (emailValue == "") {
+      setError(true);
+      setEmailError("Имэйл оруулна уу");
+    }
+    if (passwordValue == "") {
+      setError(true);
+      setPasswordError("Нууц үг оруулна уу");
+    }
+
+    state.login(emailValue.toLowerCase().trim(), passwordValue.trim());
+  };
+
+  const emailChecker = (val) => {
+    setEmailValue(val);
+    if (val == "") {
+      setEmailError("");
+      setError(false);
+    } else if (!validateEmail(val)) {
+      setError(true);
+      setEmailError("Имэйл буруу байна");
+    } else {
+      setEmailError("");
+      setError(false);
+    }
+  };
+
+  const passwordChecker = (val) => {
+    setPasswordValue(val);
+    if (val == "") {
+      setPasswordError("");
+      setError(false);
+    } else if (val.length < 6) {
+      setError(true);
+      setPasswordError("Нууц үг 6-аас дээш тооноос бүтсэн байна");
+    } else {
+      setPasswordError("");
+      setError(false);
+    }
+  };
+
   return (
     <View style={css.flex} behavior="height">
       <View style={css.row}>
@@ -23,30 +75,34 @@ const LoginField = (props) => {
               type="email-address"
               keyboardType="email-address"
               returnKeyType="next"
-              onChangeText={props.onEmailChange}
+              onChangeText={(val) => emailChecker(val)}
+              value={emailValue}
+              error={error}
+              errorText={emailError}
             />
             <MyInputField
               placeholder="Нууц үг"
               type="password"
               returnKeyType="go"
-              onChangeText={props.onPasswordChange}
+              onChangeText={(val) => passwordChecker(val)}
+              value={passwordValue}
+              error={error}
+              errorText={passwordError}
             />
           </View>
         </View>
         {state.loading ? (
           <ActivityIndicator size="large" color="##3A8096" style={css.loader} />
         ) : (
-          <MyButton iconName="arrowright" onPress={props.handleLogin} />
+          <MyButton iconName="arrowright" onPress={hangleLogIn} />
         )}
       </View>
 
-      <TouchableOpacity
-        onPress={() => console.log("Нууц үг мартсан товч дарагдлаа...")}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
         <Text style={css.text}>Нууц үг мартсан</Text>
       </TouchableOpacity>
       <View style={css.register}>
-        <TouchableOpacity onPress={props.handleRegister}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={css.registerText}>Бүртгүүлэх</Text>
         </TouchableOpacity>
       </View>
@@ -79,7 +135,7 @@ const css = StyleSheet.create({
   },
   text: {
     color: "#887F7F",
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 16,
     textAlign: "right",
     marginRight: 20,
@@ -97,7 +153,7 @@ const css = StyleSheet.create({
   },
   registerText: {
     color: "#FF4B31",
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 16,
     alignSelf: "center",
     lineHeight: 25,

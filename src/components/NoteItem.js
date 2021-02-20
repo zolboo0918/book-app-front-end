@@ -8,31 +8,40 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { PRIMARY_FONT } from "../../constants";
 import MyButton from "./MyLoginButton";
 
-const NoteItem = () => {
+const NoteItem = (props) => {
   const navigation = useNavigation();
-
+  const date = new Date(props.data.writedAt);
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("NoteDetails")}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("NoteDetails", { ...props.data })}
+    >
       <ScrollView>
         <View style={css.container}>
           <View style={css.outer}>
-            <Text style={css.title}>Гарчиг</Text>
+            <Text style={css.title}>{props.data.title}</Text>
             <TextInput
               style={css.input}
               multiline={true}
               numberOfLines={5}
               autoCorrect={false}
               editable={false}
-              value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              value={props.data.note}
             />
             <View style={css.bottom}>
-              <View>
-                <Text style={css.bottomText}>Номын нэр</Text>
-                <Text style={css.bottomText}>зохиолч</Text>
+              <View style={css.author}>
+                <Text style={css.bottomText}>{props.data.bookName}</Text>
+                <Text>{props.data.authorName}</Text>
               </View>
-              <Text style={css.bottomText}>Он сар өдөр</Text>
+              <Text style={css.bottomText}>
+                {date.getFullYear() +
+                  "-" +
+                  (date.getMonth() + 1) +
+                  "-" +
+                  date.getDate()}
+              </Text>
             </View>
           </View>
         </View>
@@ -47,6 +56,7 @@ const css = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: "10%",
   },
   outer: {
     width: "80%",
@@ -68,7 +78,7 @@ const css = StyleSheet.create({
     color: "#2F2F2F",
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 16,
     color: "black",
   },
@@ -78,6 +88,9 @@ const css = StyleSheet.create({
     width: "80%",
   },
   bottomText: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
+  },
+  author: {
+    width: "50%",
   },
 });

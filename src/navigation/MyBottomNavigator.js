@@ -2,6 +2,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import React from "react";
 import { BottomModalProvider } from "react-native-bottom-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { PRIMARY_COLOR } from "../../constants";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import UserInfo from "../screens/UserInfo";
@@ -14,7 +15,7 @@ export default () => (
     initialRouteName="Home"
     activeColor="white"
     barStyle={{
-      backgroundColor: "#3A8096",
+      backgroundColor: PRIMARY_COLOR,
     }}
     sceneAnimationEnabled={true}
     renderTouchable={true}

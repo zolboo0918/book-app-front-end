@@ -5,6 +5,7 @@ import NoteList from "../screens/NoteList";
 import CreateNote from "../screens/CreateNote";
 import TopBar from "../components/TopBar";
 import { useNavigation } from "@react-navigation/native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 
 const MyTopNavigation = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -21,9 +22,9 @@ const MyTopNavigation = () => {
           activeTintColor: "white",
           labelStyle: {
             fontSize: 12,
-            fontFamily: "MonCricket",
+            fontFamily: PRIMARY_FONT,
           },
-          inactiveTintColor: "#3A8096",
+          inactiveTintColor: PRIMARY_COLOR,
           indicatorStyle: {
             height: null,
             top: "10%",
@@ -31,7 +32,7 @@ const MyTopNavigation = () => {
             width: "45%",
             left: "2.5%",
             borderRadius: 100,
-            backgroundColor: "#3A8096",
+            backgroundColor: PRIMARY_COLOR,
           },
           style: {
             alignSelf: "center",

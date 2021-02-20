@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 
 const BookItem = ({ item }) => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,11 @@ const BookItem = ({ item }) => {
   return (
     <>
       {loading ? (
-        <ActivityIndicator size="large" color="#3A8096" style={css.loader} />
+        <ActivityIndicator
+          size="large"
+          color={PRIMARY_COLOR}
+          style={css.loader}
+        />
       ) : (
         <TouchableOpacity
           onPress={() => {
@@ -53,12 +58,12 @@ const css = StyleSheet.create({
     borderRadius: 20,
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 13,
     fontWeight: "700",
   },
   publisher: {
-    // fontFamily: "MonCricket",
+    // fontFamily: PRIMARY_FONT,
     fontSize: 11,
     top: 20,
   },

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import UserContext from "../contexts/UserContext";
 
 export default (id, comment, isForeign) => {
@@ -24,6 +25,9 @@ export default (id, comment, isForeign) => {
       }
     } catch (error) {
       console.log("error", error);
+      Alert.alert("Амжилтгүй", "", [
+        { text: "", onPress: () => navigation.navigate("Home") },
+      ]);
     }
   }, [previousComment]);
 

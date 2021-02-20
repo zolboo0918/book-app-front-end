@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import StarRating from "react-native-star-rating-new";
+import { PRIMARY_FONT } from "../../constants";
 import Comment from "../components/Comment";
 import TopBar from "../components/TopBar";
 import UserContext from "../contexts/UserContext";
@@ -124,7 +125,7 @@ const css = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 15,
     paddingVertical: 5,
   },

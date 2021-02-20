@@ -1,12 +1,49 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
 import SuccessModal from "../components/SuccessModal";
+import UserContext from "../contexts/UserContext";
+import useNotes from "../hooks/useNotes";
 
 const CreateNote = () => {
   const [successModalShow, setSuccessModalShow] = useState(false);
+  const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [bookName, setBookName] = useState("");
   const navigation = useNavigation();
+
+  const [
+    notes,
+    loading,
+    error,
+    successPosted,
+    writeNote,
+    deleteNote,
+  ] = useNotes();
+
+  const state = useContext(UserContext);
+
+  const postNote = () => {
+    const body = {
+      title,
+      note,
+      userId: state.userInfo._id,
+      bookName,
+      authorName,
+    };
+    writeNote(body);
+    if (successPosted) {
+      setSuccessModalShow(true);
+      setBookName("");
+      setAuthorName("");
+      setTitle("");
+      setNote("");
+    }
+  };
+
   return (
     <ScrollView>
       <View style={css.container}>
@@ -14,16 +51,27 @@ const CreateNote = () => {
           <Text style={css.title}>Номын нэр:</Text>
           <TextInput
             style={css.input}
-            autoCapitalize="none"
             autoCorrect={false}
+            value={bookName}
+            onChangeText={setBookName}
           />
         </View>
         <View style={css.row}>
           <Text style={css.title}>Номын зохиолч:</Text>
           <TextInput
             style={css.input}
-            autoCapitalize="none"
             autoCorrect={false}
+            value={authorName}
+            onChangeText={setAuthorName}
+          />
+        </View>
+        <View style={css.row}>
+          <Text style={css.title}>Гарчиг:</Text>
+          <TextInput
+            style={css.input}
+            autoCorrect={false}
+            value={title}
+            onChangeText={setTitle}
           />
         </View>
         <View style={css.row}>
@@ -34,13 +82,12 @@ const CreateNote = () => {
           multiline={true}
           textAlignVertical="top"
           autoCorrect={false}
+          value={note}
+          onChangeText={setNote}
         />
         <View style={css.bottom}>
           <MyNoteButton title="Буцах" onPress={() => navigation.goBack()} />
-          <MyNoteButton
-            title="Хадгалах"
-            onPress={() => setSuccessModalShow(true)}
-          />
+          <MyNoteButton title="Хадгалах" onPress={postNote} />
         </View>
         <SuccessModal
           modalVisible={successModalShow}
@@ -65,17 +112,17 @@ const css = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    borderColor: "#3A8096",
+    borderColor: PRIMARY_COLOR,
     width: "60%",
     marginLeft: "5%",
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     width: "35%",
   },
   note: {
     borderWidth: 1,
-    borderColor: "#3A8096",
+    borderColor: PRIMARY_COLOR,
     borderRadius: 20,
     marginTop: "5%",
     padding: 20,
@@ -85,7 +132,5 @@ const css = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "center",
-    marginLeft: "10%",
-    // marginRight: "auto",
   },
 });

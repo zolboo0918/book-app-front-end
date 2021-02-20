@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyButton from "./MyLoginButton";
 import MyNoteButton from "./MyNoteButton";
 import MySendButton from "./MySendButton";
@@ -12,8 +13,20 @@ const ConfirmModal = (props) => {
           <MyButton iconName="question" />
           <Text style={css.text}>Та итгэлтэй байна уу?</Text>
           <View style={css.closeButton}>
-            <MyNoteButton title="Тийм" onPress={() => props.hide(false)} />
-            <MyNoteButton title="Үгүй" onPress={() => props.hide(false)} />
+            <MyNoteButton
+              title="Тийм"
+              onPress={() => {
+                props.getResult(true);
+                props.hide(false);
+              }}
+            />
+            <MyNoteButton
+              title="Үгүй"
+              onPress={() => {
+                props.getResult(false);
+                props.hide(false);
+              }}
+            />
           </View>
         </View>
       </View>
@@ -34,20 +47,19 @@ const css = StyleSheet.create({
     height: "30%",
     width: "90%",
     borderRadius: 25,
-    borderColor: "#3A8096",
+    borderColor: PRIMARY_COLOR,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    fontFamily: "MonCricket",
-    color: "#3A8096",
+    fontFamily: PRIMARY_FONT,
+    color: PRIMARY_COLOR,
     marginTop: 20,
     fontSize: 20,
   },
   closeButton: {
     flexDirection: "row",
-    marginLeft: "12.5%",
     height: "15%",
     marginTop: "10%",
     justifyContent: "center",

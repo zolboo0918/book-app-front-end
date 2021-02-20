@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyButton from "./MyLoginButton";
 import MyNoteButton from "./MyNoteButton";
 import MySendButton from "./MySendButton";
@@ -33,14 +34,14 @@ const css = StyleSheet.create({
     height: "30%",
     width: "90%",
     borderRadius: 25,
-    borderColor: "#3A8096",
+    borderColor: PRIMARY_COLOR,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    fontFamily: "MonCricket",
-    color: "#3A8096",
+    fontFamily: PRIMARY_FONT,
+    color: PRIMARY_COLOR,
     marginTop: 20,
     fontSize: 20,
   },

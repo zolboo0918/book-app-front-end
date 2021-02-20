@@ -17,7 +17,6 @@ export default function Home(props) {
 
   const handleLogOut = () => {
     setConfirmModalShow(true);
-    state.logOut();
   };
 
   const toggleDrawer = () => {
@@ -43,6 +42,13 @@ export default function Home(props) {
       <ConfirmModal
         confirmModalVisible={confirmModalShow}
         hide={setConfirmModalShow}
+        getResult={(res) => {
+          if (res) {
+            state.logOut();
+          } else {
+            setConfirmModalShow(false);
+          }
+        }}
       />
     </View>
   );

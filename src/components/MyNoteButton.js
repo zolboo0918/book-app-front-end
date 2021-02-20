@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 
 const MyNoteButton = (props) => {
   return (
@@ -16,18 +17,21 @@ export default MyNoteButton;
 const css = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   outer: {
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#3A8096",
+    backgroundColor: PRIMARY_COLOR,
     width: "70%",
   },
   title: {
     color: "white",
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    fontSize: 10,
   },
 });

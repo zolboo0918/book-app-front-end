@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 
 const TopBar = (props) => {
   const {
@@ -13,11 +14,11 @@ const TopBar = (props) => {
   return (
     <SafeAreaView style={css.container}>
       <TouchableOpacity onPress={() => leftIconEvent()}>
-        <Ionicons name={leftIconName} size={24} color="#3A8096" />
+        <Ionicons name={leftIconName} size={24} color={PRIMARY_COLOR} />
       </TouchableOpacity>
       <Text style={css.title}>{middleText}</Text>
       <TouchableOpacity onPress={() => rightIconEvent()}>
-        <Ionicons name={rightIconName} size={24} color="#3A8096" />
+        <Ionicons name={rightIconName} size={24} color={PRIMARY_COLOR} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -36,7 +37,7 @@ const css = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontFamily: "MonCricket",
-    color: "#3A8096",
+    fontFamily: PRIMARY_FONT,
+    color: PRIMARY_COLOR,
   },
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { PRIMARY_COLOR } from "../../constants";
 
 const MySendButton = (props) => {
   return (
@@ -17,7 +18,7 @@ const css = StyleSheet.create({
   border: {
     height: 30,
     width: 30,
-    backgroundColor: "#3A8096",
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",

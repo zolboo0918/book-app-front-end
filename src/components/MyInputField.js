@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import { PRIMARY_FONT } from "../../constants";
 
 const MyInputField = (props) => {
   const { style, type } = props;
@@ -22,7 +23,7 @@ export default MyInputField;
 const css = StyleSheet.create({
   input: {
     fontSize: 16,
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     color: "#887F7F",
     paddingVertical: 10,
     paddingHorizontal: 20,

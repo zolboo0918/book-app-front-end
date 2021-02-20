@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import RadioButton from "rn-radio-button";
+import { PRIMARY_COLOR } from "../../constants";
 const SearchArea = (props) => {
   const listData = [
     { label: "Монгол ном", value: true },
@@ -29,13 +30,18 @@ const SearchArea = (props) => {
           <Ionicons
             name="close"
             size={24}
-            color="#3A8096"
+            color={PRIMARY_COLOR}
             onPress={() => props.onIconPress()}
             style={css.icon}
           />
         ) : null}
         <TouchableOpacity style={css.button} onPress={() => props.onSearch()}>
-          <Ionicons name="search" size={24} color="#3A8096" style={css.text} />
+          <Ionicons
+            name="search"
+            size={24}
+            color={PRIMARY_COLOR}
+            style={css.text}
+          />
         </TouchableOpacity>
       </View>
 
@@ -44,7 +50,7 @@ const SearchArea = (props) => {
         innerWidth={10}
         borderWidth={1}
         data={listData}
-        color={"#3A8096"}
+        color={PRIMARY_COLOR}
         onPress={(val) => props.pressCircle(val)}
         wrapperStyle={{ padding: 3 }}
         horizontal={true}
@@ -68,13 +74,13 @@ const css = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: "#3A8096",
+    borderBottomColor: PRIMARY_COLOR,
     padding: 5,
     width: "75%",
     marginHorizontal: 10,
   },
   button: {
-    backgroundColor: "#3A8096",
+    backgroundColor: PRIMARY_COLOR,
     color: "white",
     borderRadius: 5,
     marginLeft: "5%",

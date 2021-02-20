@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 // import data from "../data/book";
 import BookItem from "./BookItem";
 
@@ -24,8 +25,8 @@ export default BookGroup;
 
 const css = StyleSheet.create({
   title: {
-    fontFamily: "MonCricket",
-    color: "#3A8096",
+    fontFamily: PRIMARY_FONT,
+    color: PRIMARY_COLOR,
     fontSize: 18,
     marginHorizontal: 10,
     marginTop: "10%",

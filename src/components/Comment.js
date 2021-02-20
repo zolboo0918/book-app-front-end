@@ -7,6 +7,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { PRIMARY_FONT } from "../../constants";
 import UserContext from "../contexts/UserContext";
 import useComment from "../hooks/useComment";
 import CommentItem from "./CommentItem";
@@ -70,7 +71,7 @@ const css = StyleSheet.create({
     marginVertical: 20,
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 15,
     paddingVertical: 5,
   },

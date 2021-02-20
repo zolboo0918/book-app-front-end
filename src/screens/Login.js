@@ -6,29 +6,13 @@ import {
   Text,
   View,
 } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import LoginField from "../components/LoginField";
 import UserContext from "../contexts/UserContext";
 
 export default function Login({ navigation }) {
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [error, setError] = useState("");
-
-  const state = useContext(UserContext);
-
   const handleRegister = () => {
     navigation.navigate("Register");
-  };
-
-  const hangleLogIn = () => {
-    if (!emailValue) {
-      setError("Имэйл оруулна уу");
-    }
-    if (!passwordValue) {
-      setError("Нууц үг оруулна уу");
-    }
-
-    state.login(emailValue.toLowerCase().trim(), passwordValue.trim());
   };
 
   return (
@@ -40,12 +24,7 @@ export default function Login({ navigation }) {
       >
         <View style={css.wrapper}>
           <Text style={css.text}>Нэвтрэх</Text>
-          <LoginField
-            handleRegister={handleRegister}
-            handleLogin={hangleLogIn}
-            onEmailChange={setEmailValue}
-            onPasswordChange={setPasswordValue}
-          />
+          <LoginField />
         </View>
       </ImageBackground>
     </View>
@@ -55,7 +34,6 @@ export default function Login({ navigation }) {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "yellow",
   },
 
   wrapper: {
@@ -68,8 +46,8 @@ const css = StyleSheet.create({
     height: "100%",
   },
   text: {
-    color: "#3A8096",
-    fontFamily: "MonCricket",
+    color: PRIMARY_COLOR,
+    fontFamily: PRIMARY_FONT,
     fontSize: 35,
     textAlign: "center",
     // textAlignVertical: "center",

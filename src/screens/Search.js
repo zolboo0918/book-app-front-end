@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import StarRating from "react-native-star-rating-new";
+import { PRIMARY_FONT } from "../../constants";
 import SearchArea from "../components/SearchArea";
 import TopBar from "../components/TopBar";
 import useSearch from "../hooks/useSearch";
@@ -47,7 +48,6 @@ const Search = () => {
 
   const pressCircle = (value) => {
     setIsMongolianBook(value);
-    console.log(isMongolianBook);
   };
 
   return (
@@ -156,7 +156,7 @@ const css = StyleSheet.create({
   itemStar: { alignItems: "flex-start", marginTop: 20 },
 
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 15,
     paddingVertical: 5,
   },

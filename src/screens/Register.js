@@ -6,6 +6,7 @@ import {
   ImageBackground,
   StatusBar,
 } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import RegisterField from "../components/RegisterField";
 
 export default function Register({ navigation }) {
@@ -39,8 +40,8 @@ const css = StyleSheet.create({
     height: "100%",
   },
   text: {
-    color: "#3A8096",
-    fontFamily: "MonCricket",
+    color: PRIMARY_COLOR,
+    fontFamily: PRIMARY_FONT,
     fontSize: 35,
     textAlign: "center",
     justifyContent: "center",

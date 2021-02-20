@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MySendButton from "./MySendButton";
 
 const ProfileItem = (props) => {
@@ -37,15 +38,16 @@ const css = StyleSheet.create({
     paddingVertical: 10,
   },
   title: {
-    fontFamily: "MonCricket",
-    color: "#3A8096",
-    fontSize: 20,
+    fontFamily: PRIMARY_FONT,
+    color: PRIMARY_COLOR,
+    fontSize: 16,
+    marginTop: "5%",
   },
   input: {
     borderBottomWidth: 1,
-    borderColor: "#3A8096",
+    borderColor: PRIMARY_COLOR,
     marginTop: "5%",
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 15,
     width: "100%",
     color: "#303030",

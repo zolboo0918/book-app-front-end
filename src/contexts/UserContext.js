@@ -30,30 +30,34 @@ export const UserStore = (props) => {
       })
       .catch((err) => {
         setError(err.message);
-        console.log("err=>", err.message);
+        console.log("err=>", err);
         setIsLoggedIn(false);
         setLoading(false);
       });
   };
   const register = (userInfo) => {
-    console.log("hahahha", userInfo);
     setLoading(true);
-    axios
-      .post(`https://bookappapi.herokuapp.com/api/v1/users/register`, {
-        userInfo,
-      })
-      .then((res) => {
-        setToken(res.data.token);
-        setIsLoggedIn(true);
-        setUserInfo(res.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("error=>", err.message);
-        setError(err.message);
-        setIsLoggedIn(false);
-        setLoading(false);
-      });
+    try {
+      axios
+        .post(
+          `https://bookappapi.herokuapp.com/api/v1/users/register`,
+          userInfo
+        )
+        .then((res) => {
+          setToken(res.data.token);
+          setIsLoggedIn(true);
+          setUserInfo(res.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log("error=>", err.message);
+          setError(err.message);
+          setIsLoggedIn(false);
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log("error->", error.message);
+    }
   };
 
   return (

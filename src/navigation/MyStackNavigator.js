@@ -7,6 +7,8 @@ import BookDetail from "../screens/BookDetail";
 import MyDrawerNavigator from "./MyDrawerNavigator";
 import UserContext from "../contexts/UserContext";
 import NoteDetails from "../screens/NoteDetails";
+import ForgetPassword from "../screens/ForgetPassword";
+import NewPassword from "../screens/NewPassword";
 
 const Stack = createStackNavigator();
 export default () => {
@@ -47,6 +49,16 @@ export default () => {
           <Stack.Screen
             name="Register"
             component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ForgetPassword"
+            component={ForgetPassword}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="NewPassword"
+            component={NewPassword}
             options={{ headerShown: false }}
           />
         </>

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "./MyNoteButton";
 
 const EmptyNote = () => {
@@ -38,9 +39,9 @@ const css = StyleSheet.create({
     marginTop: "30%",
   },
   description: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 18,
-    color: "#3A8096",
+    color: PRIMARY_COLOR,
     textAlign: "center",
     marginBottom: "10%",
   },

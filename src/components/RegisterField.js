@@ -12,13 +12,14 @@ import {
 import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
+import { PRIMARY_FONT, validateEmail } from "../../constants";
 
 const RegisterField = (props) => {
-  const [firstName, setFirstName] = useState("aa");
-  const [lastName, setLastName] = useState("bb");
-  const [email, setEmail] = useState("aa@gmail.com");
-  const [phone, setPhone] = useState("88888888");
-  const [password1, setPassword1] = useState("111111");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
   const [error, setError] = useState(false);
@@ -29,21 +30,14 @@ const RegisterField = (props) => {
 
   const state = useContext(UserContext);
 
-  function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
   const handleRegister = () => {
     const userInfo = {
       firstName: firstName,
       lastName: lastName,
-      email: email,
+      email: email.toLowerCase(),
       phone: phone,
       password: password1,
     };
-
-    console.log("userinfo ", userInfo);
 
     state.register(userInfo);
   };
@@ -69,7 +63,7 @@ const RegisterField = (props) => {
       setError(false);
     } else if (val.length < 8) {
       setError(true);
-      setPhoneError("Гар утасын дугаар буруу байна");
+      setPhoneError("Гар утасны дугаар буруу байна");
     } else {
       setPhoneError("");
       setError(false);
@@ -126,6 +120,7 @@ const RegisterField = (props) => {
               placeholder="Имэйл"
               type="email-address"
               keyboardType="email-address"
+              autoCapitalize="none"
               value={email}
               onChangeText={(val) => emailChecker(val)}
               error={error}
@@ -228,7 +223,7 @@ const css = StyleSheet.create({
   },
   registerText: {
     color: "#FF4B31",
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 16,
     alignSelf: "center",
     lineHeight: 25,

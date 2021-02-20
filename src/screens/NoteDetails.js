@@ -1,16 +1,41 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { PRIMARY_FONT } from "../../constants";
 import ConfirmModal from "../components/ConfirmModal";
 import MyNoteButton from "../components/MyNoteButton";
 import SuccessModal from "../components/SuccessModal";
 import TopBar from "../components/TopBar";
+import useNotes from "../hooks/useNotes";
 
-const NoteDetails = () => {
+const NoteDetails = (props) => {
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [confirmModalShow, setConfirmModalShow] = useState(false);
 
+  const [deleteAble, setDeleteAble] = useState(false);
+
+  const data = props.route.params;
+  const date = new Date(data.writedAt);
+
   const navigation = useNavigation();
+
+  const [
+    notes,
+    loading,
+    error,
+    successPosted,
+    writeNote,
+    deleteNote,
+  ] = useNotes();
+
+  const handleDelete = () => {
+    setConfirmModalShow(true);
+    console.log("deleteAble", confirmModalShow, deleteAble);
+
+    //  else {
+    //   setConfirmModalShow(false);
+    // }
+  };
 
   return (
     <>
@@ -23,18 +48,26 @@ const NoteDetails = () => {
         <View style={css.container}>
           <View style={css.body}>
             <View style={css.titleSection}>
-              <Text style={css.title}>Гарчиг</Text>
+              <Text style={css.title}>{data.title}</Text>
             </View>
             <View style={css.middle}>
-              <Text style={css.title}>Номын нэр</Text>
-              <Text style={css.title}>Он сар өдөр</Text>
+              <View style={css.bookTitle}>
+                <Text style={css.title}>{data.bookName}</Text>
+              </View>
+              <Text style={css.title}>
+                {date.getFullYear() +
+                  "-" +
+                  (date.getMonth() + 1) +
+                  "-" +
+                  date.getDate()}
+              </Text>
             </View>
             <View style={css.note}>
               <TextInput
                 style={css.input}
                 multiline={true}
                 // editable={false}
-                defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                defaultValue={data.note}
               />
             </View>
           </View>
@@ -43,18 +76,27 @@ const NoteDetails = () => {
               title="Засах"
               onPress={() => setSuccessModalShow(true)}
             />
-            <MyNoteButton
-              title="Устгах"
-              onPress={() => setConfirmModalShow(true)}
-            />
+            <MyNoteButton title="Устгах" onPress={handleDelete} />
           </View>
           <SuccessModal
             modalVisible={successModalShow}
-            hide={setSuccessModalShow}
+            hide={(val) => {
+              setSuccessModalShow(val);
+              navigation.goBack();
+            }}
           />
           <ConfirmModal
             confirmModalVisible={confirmModalShow}
             hide={setConfirmModalShow}
+            getResult={(res) => {
+              console.log("res res ", res);
+              if (res) {
+                deleteNote(data._id);
+                if (successPosted) {
+                  setSuccessModalShow(true);
+                }
+              }
+            }}
           />
         </View>
       </ScrollView>
@@ -81,7 +123,7 @@ const css = StyleSheet.create({
     margin: 10,
   },
   title: {
-    fontFamily: "MonCricket",
+    fontFamily: PRIMARY_FONT,
     fontSize: 16,
   },
   middle: {
@@ -99,6 +141,8 @@ const css = StyleSheet.create({
   },
   bottom: {
     flexDirection: "row",
-    marginLeft: "10%",
+  },
+  bookTitle: {
+    width: "40%",
   },
 });
