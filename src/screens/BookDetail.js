@@ -78,7 +78,7 @@ const BookDetail = (props) => {
             <Image
               source={{ uri: cover }}
               style={css.image}
-              resizeMode="center"
+              resizeMode="contain"
             />
             <View style={css.info}>
               <Text style={css.title}>{title}</Text>

@@ -27,8 +27,6 @@ const Comment = (props) => {
     updateComment,
   ] = useComment(props.id, props.comment, props.isForeign);
 
-  const [confirmModalShow, setConfirmModalShow] = useState(false);
-
   return (
     <View style={css.container}>
       <Text style={css.title}>Сэтгэгдлүүд</Text>
@@ -53,19 +51,8 @@ const Comment = (props) => {
               editedComment={editedComment}
               comment={item}
               onChangeText={setEditedComment}
-              onDelete={() => setConfirmModalShow(true)}
+              onDelete={deleteComment}
               onUpdate={() => updateComment(item._id)}
-            />
-            <ConfirmModal
-              confirmModalVisible={confirmModalShow}
-              hide={setConfirmModalShow}
-              getResult={(res) => {
-                if (res) {
-                  deleteComment(item._id);
-                } else {
-                  setConfirmModalShow(false);
-                }
-              }}
             />
           </View>
         ))

@@ -37,7 +37,11 @@ export default (id, comment, isForeign) => {
         headers: { Authorization: `Bearer ${state.token}` },
       })
       .then((res) => {
-        setComments(res.data.data);
+        const arr = res.data.data;
+
+        const sorted = arr.sort((a, b) => (a.writedAt < b.writedAt ? 1 : -1));
+        setComments(sorted);
+
         setLoading(false);
       })
       .catch((err) => {
@@ -54,6 +58,7 @@ export default (id, comment, isForeign) => {
         {
           comment: writedComment,
           userId: state.userInfo._id,
+          writedAt: date,
         },
         { headers: { Authorization: `Bearer ${state.token}` } }
       )
@@ -89,7 +94,7 @@ export default (id, comment, isForeign) => {
       .delete(url, { headers: { Authorization: `Bearer ${state.token}` } })
       .then((res) => {
         setPreviousComment(
-          previousComment.filter((el) => el._id != res.data.data._id)
+          previousComment.filter((el) => el._id !== res.data.data._id)
         );
         setLoading(false);
       })

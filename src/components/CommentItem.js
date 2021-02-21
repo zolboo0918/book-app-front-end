@@ -10,13 +10,17 @@ import {
 } from "react-native";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import UserContext from "../contexts/UserContext";
+import ConfirmModal from "./ConfirmModal";
 import MySendButton from "./MySendButton";
 
 const CommentItem = (props) => {
-  const { comment, userId, writedAt } = props.comment;
+  const { _id, comment, userId, writedAt } = props.comment;
   const [isEditable, setIsEditable] = useState(false);
   const [post, setPost] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
+
   const date = new Date(writedAt);
   const state = useContext(UserContext);
 
@@ -57,14 +61,35 @@ const CommentItem = (props) => {
 
       {userId._id == state.userInfo._id ? (
         !edit && !post ? (
-          <TouchableOpacity onPress={() => setEdit(true)} style={css.myButton}>
+          <TouchableOpacity
+            onPress={() => {
+              setEdit(true);
+              console.log("item", props);
+            }}
+            style={css.myButton}
+          >
             <Feather name="more-horizontal" size={18} color={PRIMARY_COLOR} />
           </TouchableOpacity>
         ) : edit && !post ? (
           <>
             <View style={css.delete}>
-              <TouchableOpacity onPress={props.onDelete}>
+              <TouchableOpacity
+                onPress={() => {
+                  setConfirmModalShow(true);
+                }}
+              >
                 <Feather name="trash" size={18} color="#BF3325" />
+                <ConfirmModal
+                  confirmModalVisible={confirmModalShow}
+                  hide={() => setConfirmModalShow(false)}
+                  getResult={(res) => {
+                    if (res) {
+                      props.onDelete(_id);
+                    } else {
+                      setConfirmModalShow(false);
+                    }
+                  }}
+                />
               </TouchableOpacity>
             </View>
             <View style={css.delete}>
