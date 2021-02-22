@@ -1,4 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, {
+  useContext,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -7,12 +12,13 @@ import {
   View,
 } from "react-native";
 import UserContext from "../contexts/UserContext";
-import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
 import { PRIMARY_FONT, validateEmail } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
+import { Form, TextInput } from "react-native-autofocus";
+import Toast from "react-native-toast-message";
 
-const LoginField = (props) => {
+const LoginField = (props, ref) => {
   const state = useContext(UserContext);
   const [emailValue, setEmailValue] = useState("zolboo412@gmail.com");
   const [passwordValue, setPasswordValue] = useState("123456");
@@ -25,43 +31,30 @@ const LoginField = (props) => {
 
   const hangleLogIn = () => {
     if (emailValue == "") {
-      setError(true);
-      setEmailError("Имэйл оруулна уу");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Имэйл оруулна уу",
+        type: "error",
+      });
+      return;
     }
     if (passwordValue == "") {
-      setError(true);
-      setPasswordError("Нууц үг оруулна уу");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Нууц үг оруулна уу",
+        type: "error",
+      });
+      return;
     }
-
+    if (!validateEmail(emailValue)) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Имэйл буруу байна",
+        type: "error",
+      });
+      return;
+    }
     state.login(emailValue.toLowerCase().trim(), passwordValue.trim());
-  };
-
-  const emailChecker = (val) => {
-    setEmailValue(val);
-    if (val == "") {
-      setEmailError("");
-      setError(false);
-    } else if (!validateEmail(val)) {
-      setError(true);
-      setEmailError("Имэйл буруу байна");
-    } else {
-      setEmailError("");
-      setError(false);
-    }
-  };
-
-  const passwordChecker = (val) => {
-    setPasswordValue(val);
-    if (val == "") {
-      setPasswordError("");
-      setError(false);
-    } else if (val.length < 6) {
-      setError(true);
-      setPasswordError("Нууц үг 6-аас дээш тооноос бүтсэн байна");
-    } else {
-      setPasswordError("");
-      setError(false);
-    }
   };
 
   return (
@@ -69,26 +62,27 @@ const LoginField = (props) => {
       <View style={css.row}>
         <View style={css.wrapper}>
           <View style={{ width: "100%" }}>
-            <MyInputField
-              placeholder="Имэйл"
-              style={{ width: "100%", borderBottomWidth: 1 }}
-              type="email-address"
-              keyboardType="email-address"
-              returnKeyType="next"
-              onChangeText={(val) => emailChecker(val)}
-              value={emailValue}
-              error={error}
-              errorText={emailError}
-            />
-            <MyInputField
-              placeholder="Нууц үг"
-              type="password"
-              returnKeyType="go"
-              onChangeText={(val) => passwordChecker(val)}
-              value={passwordValue}
-              error={error}
-              errorText={passwordError}
-            />
+            <Form>
+              <TextInput
+                placeholder="Имэйл"
+                style={css.input}
+                type="email-address"
+                keyboardType="email-address"
+                returnKeyType="next"
+                onChangeText={(val) => setEmailValue(val)}
+                value={emailValue}
+              />
+              <TextInput
+                placeholder="Нууц үг"
+                type="password"
+                returnKeyType="go"
+                secureTextEntry={true}
+                onSubmitEditing={hangleLogIn}
+                onChangeText={(val) => setPasswordValue(val)}
+                value={passwordValue}
+                style={css.input2}
+              />
+            </Form>
           </View>
         </View>
         {state.loading ? (
@@ -160,5 +154,23 @@ const css = StyleSheet.create({
   },
   bottom: {
     marginTop: "15%",
+  },
+  input: {
+    fontSize: 16,
+    fontFamily: PRIMARY_FONT,
+    color: "#887F7F",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: "#887F7F",
+    width: "90%",
+    borderBottomWidth: 1,
+  },
+  input2: {
+    fontSize: 16,
+    fontFamily: PRIMARY_FONT,
+    color: "#887F7F",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: "#887F7F",
   },
 });

@@ -24,6 +24,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-auto-placeholder-loading": "0.0.1",
+    "react-native-autofocus": "0.0.7",
     "react-native-bottom-modal": "^0.5.6",
     "react-native-gesture-handler": "^1.10.1",
     "react-native-linear-gradient": "^2.5.6",

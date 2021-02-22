@@ -33,7 +33,6 @@ const css = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 10,
-    // padding: 10,
   },
   title: {
     fontSize: 24,

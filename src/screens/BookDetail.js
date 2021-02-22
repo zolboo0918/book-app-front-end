@@ -63,49 +63,47 @@ const BookDetail = (props) => {
   }, []);
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : "padding"}
+      style={css.container}
+    >
       <TopBar
         leftIconName="arrow-back-outline"
         middleText="Номын дэлгэрэнгүй"
         leftIconEvent={() => navigation.goBack()}
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        style={css.container}
-      >
-        <ScrollView>
-          <View style={css.top}>
-            <Image
-              source={{ uri: cover }}
-              style={css.image}
-              resizeMode="contain"
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={css.top}>
+          <Image
+            source={{ uri: cover }}
+            style={css.image}
+            resizeMode="contain"
+          />
+          <View style={css.info}>
+            <Text style={css.title}>{title}</Text>
+            <Text style={css.title}>{publisher.name}</Text>
+            <Text style={css.title}>
+              {category.includes(",") ? category.split(", ")[1] : category}
+            </Text>
+            <Text style={css.title}>{isbn ? isbn : "ISBN:"}</Text>
+            <Text style={css.title}>{release_date.slice(0, 10)}</Text>
+            <Text style={css.title}>Үнэлгээ:</Text>
+            <StarRating
+              disabled={true}
+              rating={rating}
+              fullStarColor={"#E8BD0D"}
+              starSize={20}
             />
-            <View style={css.info}>
-              <Text style={css.title}>{title}</Text>
-              <Text style={css.title}>{publisher.name}</Text>
-              <Text style={css.title}>
-                {category.includes(",") ? category.split(", ")[1] : category}
-              </Text>
-              <Text style={css.title}>{isbn ? isbn : "ISBN:"}</Text>
-              <Text style={css.title}>{release_date.slice(0, 10)}</Text>
-              <Text style={css.title}>Үнэлгээ:</Text>
-              <StarRating
-                disabled={true}
-                rating={rating}
-                fullStarColor={"#E8BD0D"}
-                starSize={20}
-              />
-            </View>
           </View>
-          <View style={css.desc}>
-            <Text style={css.title}>Тайлбар</Text>
-            <Text style={css.description}>{description}</Text>
-          </View>
+        </View>
+        <View style={css.desc}>
+          <Text style={css.title}>Тайлбар</Text>
+          <Text style={css.description}>{description}</Text>
+        </View>
 
-          <Comment comments={comment} id={_id} isForeign={isForeign} />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </>
+        <Comment comments={comment} id={_id} isForeign={isForeign} />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

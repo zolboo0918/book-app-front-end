@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 import UserContext from "../contexts/UserContext";
 
 export default (id, comment, isForeign) => {
@@ -25,9 +26,10 @@ export default (id, comment, isForeign) => {
       }
     } catch (error) {
       console.log("error", error);
-      Alert.alert("Амжилтгүй", "", [
-        { text: "", onPress: () => navigation.navigate("Home") },
-      ]);
+      Toast.show({
+        text1: "Амжилтгүй",
+        type: "error",
+      });
     }
   }, [previousComment]);
 
@@ -97,10 +99,20 @@ export default (id, comment, isForeign) => {
           previousComment.filter((el) => el._id !== res.data.data._id)
         );
         setLoading(false);
+        Toast.show({
+          text1: "Амжилттай",
+          type: "success",
+          position: "top",
+        });
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        Toast.show({
+          text1: "Амжилтгүй",
+          type: "error",
+          position: "top",
+        });
       });
   };
 
@@ -123,10 +135,20 @@ export default (id, comment, isForeign) => {
           })
         );
         setLoading(false);
+        Toast.show({
+          text1: "Амжилттай",
+          type: "success",
+          position: "top",
+        });
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        Toast.show({
+          text1: "Амжилтгүй",
+          type: "error",
+          position: "top",
+        });
       });
   };
 

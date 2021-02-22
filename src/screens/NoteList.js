@@ -28,7 +28,6 @@ const NoteList = () => {
     setTimeout(() => {
       setRefreshing(false);
       getNotes();
-      console.log("refreshed");
     }, 200);
   }, []);
 

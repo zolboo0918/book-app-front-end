@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 import UserContext from "../contexts/UserContext";
 
 export default () => {
@@ -85,6 +86,26 @@ export default () => {
     }
   };
 
+  const editNote = (id, body) => {
+    setLoading(true);
+    axios
+      .put(`https://bookappapi.herokuapp.com/api/v1/notes/${id}`, body, {
+        headers: { Authorization: `Bearer ${state.token}` },
+      })
+      .then((res) => {
+        console.log("resss", res.data);
+        setSuccessPosted(true);
+        setNotes(notes.filter((el) => el._id !== id));
+        setNotes((notes) => [...notes, res.data.data]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("err=> ", err);
+        setError(error.message);
+        setLoading(false);
+      });
+  };
+
   return [
     notes,
     loading,
@@ -93,5 +114,6 @@ export default () => {
     writeNote,
     deleteNote,
     getNotes,
+    editNote,
   ];
 };

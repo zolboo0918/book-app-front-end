@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { PRIMARY_FONT } from "../../constants";
 import ConfirmModal from "../components/ConfirmModal";
 import MyNoteButton from "../components/MyNoteButton";
@@ -12,10 +13,14 @@ const NoteDetails = (props) => {
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [confirmModalShow, setConfirmModalShow] = useState(false);
 
-  const [deleteAble, setDeleteAble] = useState(false);
+  const [editClicked, setEditClicked] = useState(false);
 
   const data = props.route.params;
   const date = new Date(data.writedAt);
+
+  const [editedNote, setEditedNote] = useState(data.note);
+
+  const editRef = useRef();
 
   const navigation = useNavigation();
 
@@ -26,15 +31,31 @@ const NoteDetails = (props) => {
     successPosted,
     writeNote,
     deleteNote,
+    getNotes,
+    editNote,
   ] = useNotes();
 
   const handleDelete = () => {
     setConfirmModalShow(true);
-    console.log("deleteAble", confirmModalShow, deleteAble);
+  };
 
-    //  else {
-    //   setConfirmModalShow(false);
-    // }
+  const handleEditNote = () => {
+    const body = {
+      note: editedNote,
+    };
+
+    editNote(data._id, body);
+    if (successPosted) {
+      Toast.show({
+        text1: "Амжилттай",
+        text2: "Та refresh хийнэ үү",
+        type: "success",
+        position: "top",
+      });
+      navigation.goBack();
+      // setSuccessModalShow(true);
+    }
+    setEditClicked(false);
   };
 
   return (
@@ -64,20 +85,33 @@ const NoteDetails = (props) => {
             </View>
             <View style={css.note}>
               <TextInput
+                ref={editRef}
                 style={css.input}
                 multiline={true}
-                // editable={false}
+                editable={editClicked}
                 defaultValue={data.note}
+                value={editedNote}
+                onChangeText={setEditedNote}
               />
             </View>
           </View>
-          <View style={css.bottom}>
-            <MyNoteButton
-              title="Засах"
-              onPress={() => setSuccessModalShow(true)}
-            />
-            <MyNoteButton title="Устгах" onPress={handleDelete} />
-          </View>
+          {!editClicked ? (
+            <View style={css.bottom}>
+              <MyNoteButton
+                title="Засах"
+                onPress={() => {
+                  setEditClicked(true);
+                  setTimeout(() => editRef.current.focus(), 200);
+                }}
+              />
+              <MyNoteButton title="Устгах" onPress={handleDelete} />
+            </View>
+          ) : (
+            <View style={css.bottom}>
+              <MyNoteButton title="Илгээх" onPress={handleEditNote} />
+            </View>
+          )}
+
           <SuccessModal
             modalVisible={successModalShow}
             hide={(val) => {
@@ -89,11 +123,16 @@ const NoteDetails = (props) => {
             confirmModalVisible={confirmModalShow}
             hide={setConfirmModalShow}
             getResult={(res) => {
-              console.log("res res ", res);
               if (res) {
                 deleteNote(data._id);
                 if (successPosted) {
-                  setSuccessModalShow(true);
+                  Toast.show({
+                    text1: "Амжилттай",
+                    text2: "Та refresh хийнэ үү",
+                    type: "success",
+                    position: "top",
+                  });
+                  navigation.navigate("Бичсэн тэмдэглэлүүд");
                 }
               }
             }}

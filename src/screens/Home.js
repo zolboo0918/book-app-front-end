@@ -16,13 +16,6 @@ export default function Home(props) {
 
   const [newbooks, topRatedBook, bestSeller] = useCategories();
 
-  useEffect(() => {
-    Toast.show({
-      text1: "Hello",
-      text2: "This is some something 👋",
-    });
-  }, []);
-
   const handleLogOut = () => {
     setConfirmModalShow(true);
   };

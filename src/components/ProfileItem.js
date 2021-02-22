@@ -15,7 +15,7 @@ const ProfileItem = (props) => {
     <KeyboardAvoidingView behavior="padding" style={css.item}>
       <Text style={css.title}>{title}</Text>
       <TextInput
-        style={css.input}
+        style={[css.input, props.style]}
         autoCorrect={false}
         placeholder={placeHolder}
         editable={props.editable}
@@ -41,12 +41,11 @@ const css = StyleSheet.create({
     fontFamily: PRIMARY_FONT,
     color: PRIMARY_COLOR,
     fontSize: 16,
-    marginTop: "5%",
   },
   input: {
     borderBottomWidth: 1,
     borderColor: PRIMARY_COLOR,
-    marginTop: "5%",
+    marginVertical: "5%",
     fontFamily: PRIMARY_FONT,
     fontSize: 15,
     width: "100%",
@@ -54,7 +53,7 @@ const css = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    right: "10%",
-    bottom: "20%",
+    marginLeft: "100%",
+    bottom: 20,
   },
 });

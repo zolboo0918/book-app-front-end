@@ -90,7 +90,7 @@ const css = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    marginTop: "5%",
+    marginVertical: "5%",
   },
   text: {
     fontFamily: PRIMARY_FONT,

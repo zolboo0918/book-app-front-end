@@ -1,14 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
-import SuccessModal from "../components/SuccessModal";
 import UserContext from "../contexts/UserContext";
 import useNotes from "../hooks/useNotes";
 
 const CreateNote = () => {
-  const [successModalShow, setSuccessModalShow] = useState(false);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [authorName, setAuthorName] = useState("");
@@ -36,7 +35,13 @@ const CreateNote = () => {
     };
     writeNote(body);
     if (successPosted) {
-      setSuccessModalShow(true);
+      navigation.navigate("Бичсэн тэмдэглэлүүд");
+      Toast.show({
+        text1: "Амижилттай",
+        text2: "Та refresh хийнэ үү",
+        type: "success",
+        position: "top",
+      });
       setBookName("");
       setAuthorName("");
       setTitle("");
@@ -89,10 +94,6 @@ const CreateNote = () => {
           <MyNoteButton title="Буцах" onPress={() => navigation.goBack()} />
           <MyNoteButton title="Хадгалах" onPress={postNote} />
         </View>
-        <SuccessModal
-          modalVisible={successModalShow}
-          hide={setSuccessModalShow}
-        />
       </View>
     </ScrollView>
   );

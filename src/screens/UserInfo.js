@@ -10,17 +10,16 @@ import {
   View,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import Toast from "react-native-toast-message";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PRIMARY_COLOR } from "../../constants";
 import EditUserInfoBottomModal from "../components/EditUserInfoBottomModal";
 import MySendButton from "../components/MySendButton";
 import ProfileItem from "../components/ProfileItem";
-import SuccessModal from "../components/SuccessModal";
 import UserContext from "../contexts/UserContext";
 import useUsers from "../hooks/useUsers";
 
 const UserInfo = () => {
-  const [successModalShow, setSuccessModalShow] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -54,8 +53,12 @@ const UserInfo = () => {
 
     updateUserInfo(body);
     if (success) {
-      setSuccessModalShow(true);
       editInfoRef.current.close();
+      Toast.show({
+        text1: "Амжилттай",
+        type: "success",
+        position: "top",
+      });
       getUserInfo();
       setFirstName("");
       setLastName("");
@@ -65,7 +68,11 @@ const UserInfo = () => {
 
   const passwordSave = () => {
     if (newPassword === "" || newPassword2 === "" || oldPassword === "") {
-      Alert.alert("Бүх талбарыг бөглөнө үү");
+      Toast.show({
+        text1: "Бүх талбарыг бөглөнө үү",
+        type: "error",
+        position: "top",
+      });
       return;
     }
     if (newPassword !== newPassword2) {
@@ -73,9 +80,11 @@ const UserInfo = () => {
       return;
     }
     changePassword(oldPassword, newPassword);
+    editPasswordRef.current.close();
     if (success) {
-      setSuccessModalShow(true);
-      editPasswordRef.current.close();
+      Toast.show({
+        text1: "Амжилттай",
+      });
       setOldPassword("");
       setNewPassword("");
       setNewPassword2("");
@@ -116,7 +125,7 @@ const UserInfo = () => {
               style={{ marginTop: "50%" }}
             />
           ) : (
-            <View>
+            <View style={css.form}>
               <ProfileItem
                 title="Имэйл"
                 placeHolder="email@email.com"
@@ -157,7 +166,7 @@ const UserInfo = () => {
 
       <RBSheet
         ref={editInfoRef}
-        height={400}
+        height={450}
         animationType="fade"
         closeOnDragDown={true}
         closeOnPressMask={false}
@@ -183,14 +192,14 @@ const UserInfo = () => {
       </RBSheet>
       <RBSheet
         ref={editPasswordRef}
-        height={400}
+        height={450}
         animationType="fade"
         closeOnDragDown={true}
         closeOnPressMask={false}
         customStyles={{
           container: {
-            borderTopRightRadius: 20,
-            borderTopLeftRadius: 20,
+            borderTopRightRadius: 40,
+            borderTopLeftRadius: 40,
           },
         }}
       >
@@ -206,10 +215,6 @@ const UserInfo = () => {
           onNewPassword2Change={setNewPassword2}
         />
       </RBSheet>
-      <SuccessModal
-        modalVisible={successModalShow}
-        hide={setSuccessModalShow}
-      />
     </SafeAreaView>
   );
 };
@@ -242,5 +247,8 @@ const css = StyleSheet.create({
   },
   button: {
     alignSelf: "flex-end",
+  },
+  form: {
+    marginBottom: "5%",
   },
 });

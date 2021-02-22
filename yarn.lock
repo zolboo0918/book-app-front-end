@@ -5479,6 +5479,11 @@ react-native-auto-placeholder-loading@0.0.1:
   resolved "https://registry.yarnpkg.com/react-native-auto-placeholder-loading/-/react-native-auto-placeholder-loading-0.0.1.tgz#31e053bce7bb618271e7ec361b123f08805a2df9"
   integrity sha512-brFCm3S3LiD/vRZBIcbGT0qFN2Y9BYNY4b+rW3HByDWyGRB9fbeeKKc1ixngZh5PfpWkCyx+/3LMWeGfbHzgQg==
 
+react-native-autofocus@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-autofocus/-/react-native-autofocus-0.0.7.tgz#d5c8ef10a35a2bfcdc28cb42df6a5c3917eb2fbd"
+  integrity sha512-FcC9fdTLLEsY/toCEBSezix0664C1GP0Z+GxWaEAGmVPwmqaACMviQsW5iTvwGywhPjJsT+qaMuF0l+3wVrPvQ==
+
 react-native-bottom-modal@^0.5.6:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/react-native-bottom-modal/-/react-native-bottom-modal-0.5.6.tgz#dc2e55c697865cb4ef9b44d389cf1499651345dc"

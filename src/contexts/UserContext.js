@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Toast from "react-native-toast-message";
 
 const UserContext = React.createContext();
 
@@ -33,6 +34,14 @@ export const UserStore = (props) => {
         console.log("err=>", err);
         setIsLoggedIn(false);
         setLoading(false);
+        Toast.show({
+          text1: "Алдаа гарлаа",
+          text2: err
+            ? err.response.data.error.message
+            : "Та интернэт холболтоо шалгана уу",
+          type: "error",
+          position: "top",
+        });
       });
   };
   const register = (userInfo) => {
@@ -50,8 +59,13 @@ export const UserStore = (props) => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log("error=>", err.message);
-          setError(err.message);
+          Toast.show({
+            text1: "Алдаа",
+            text2: err.response.data
+              ? err.response.data.error.message
+              : "Та дахин оролдоно уу",
+            type: "error",
+          });
           setIsLoggedIn(false);
           setLoading(false);
         });

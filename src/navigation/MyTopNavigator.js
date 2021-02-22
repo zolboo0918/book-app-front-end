@@ -7,7 +7,7 @@ import TopBar from "../components/TopBar";
 import { useNavigation } from "@react-navigation/native";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 
-const MyTopNavigation = () => {
+const MyTopNavigator = () => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
   return (
@@ -56,6 +56,4 @@ const MyTopNavigation = () => {
   );
 };
 
-export default MyTopNavigation;
-
-const styles = StyleSheet.create({});
+export default MyTopNavigator;

@@ -1,7 +1,8 @@
 import { Feather } from "@expo/vector-icons";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -16,27 +17,36 @@ import MySendButton from "./MySendButton";
 const CommentItem = (props) => {
   const { _id, comment, userId, writedAt } = props.comment;
   const [isEditable, setIsEditable] = useState(false);
+  const [confirmModalShow, setConfirmModalShow] = useState(false);
   const [post, setPost] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  const [confirmModalShow, setConfirmModalShow] = useState(false);
-
   const date = new Date(writedAt);
   const state = useContext(UserContext);
+  const editRef = useRef();
 
   const handleUpdate = () => {
     setIsEditable(true);
+    setTimeout(() => {
+      editRef.current.focus();
+    }, 200);
     setPost(true);
   };
 
+  console.log("isEditAble", isEditable);
+
   return (
-    <KeyboardAvoidingView style={css.writeComment} behavior="padding">
+    <KeyboardAvoidingView
+      style={css.writeComment}
+      behavior={Platform.OS == "ios" ? "padding" : null}
+    >
       <View style={css.userIcon}>
         <Feather name="user" size={24} color="black" />
         <Text style={css.user}>{userId.firstName}</Text>
       </View>
       <View style={css.rightSection}>
         <TextInput
+          ref={editRef}
           style={css.comment}
           defaultValue={comment}
           editable={isEditable}
@@ -61,13 +71,7 @@ const CommentItem = (props) => {
 
       {userId._id == state.userInfo._id ? (
         !edit && !post ? (
-          <TouchableOpacity
-            onPress={() => {
-              setEdit(true);
-              console.log("item", props);
-            }}
-            style={css.myButton}
-          >
+          <TouchableOpacity onPress={() => setEdit(true)} style={css.myButton}>
             <Feather name="more-horizontal" size={18} color={PRIMARY_COLOR} />
           </TouchableOpacity>
         ) : edit && !post ? (

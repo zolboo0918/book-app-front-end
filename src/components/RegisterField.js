@@ -13,6 +13,8 @@ import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
 import { PRIMARY_FONT, validateEmail } from "../../constants";
+import { Form, TextInput } from "react-native-autofocus";
+import Toast from "react-native-toast-message";
 
 const RegisterField = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -22,79 +24,65 @@ const RegisterField = (props) => {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const [error, setError] = useState(false);
-  const [phoneError, setPhoneError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordLengthError, setPasswordLengthError] = useState("");
-  const [passwordTypeError, setPasswordTypeError] = useState("");
-
   const state = useContext(UserContext);
 
   const handleRegister = () => {
+    if (
+      phone === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password1 === "" ||
+      password2 === ""
+    ) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Бүх талбарыг бөглөнө үү",
+        type: "error",
+      });
+      return;
+    }
+    if (!validateEmail(email)) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Имэйл буруу байна",
+        type: "error",
+      });
+      return;
+    }
+    if (phone.length < 6) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Утасны дугаар шалгана уу",
+        type: "error",
+      });
+      return;
+    }
+    if (password1.length < 6) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Нууц үг 6-аас дээш тэмдэгттэй байна",
+        type: "error",
+      });
+      return;
+    }
+    if (password1 !== password2) {
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Нууц үг тохирохгүй байна",
+        type: "error",
+      });
+      return;
+    }
     const userInfo = {
-      firstName: firstName,
-      lastName: lastName,
+      firstName,
+      lastName,
       email: email.toLowerCase(),
-      phone: phone,
+      phone,
       password: password1,
     };
 
     state.register(userInfo);
-  };
-
-  const emailChecker = (val) => {
-    setEmail(val);
-    if (val == "") {
-      setEmailError("");
-      setError(false);
-    } else if (!validateEmail(val)) {
-      setError(true);
-      setEmailError("Имэйл буруу байна");
-    } else {
-      setEmailError("");
-      setError(false);
-    }
-  };
-
-  const phoneChecker = (val) => {
-    setPhone(val);
-    if (val == "") {
-      setPhoneError("");
-      setError(false);
-    } else if (val.length < 8) {
-      setError(true);
-      setPhoneError("Гар утасны дугаар буруу байна");
-    } else {
-      setPhoneError("");
-      setError(false);
-    }
-  };
-  const passwordLengthChecker = (val) => {
-    setPassword1(val);
-    if (val == "") {
-      setPasswordLengthError("");
-      setError(false);
-    } else if (val.length < 6) {
-      setError(true);
-      setPasswordLengthError("Нууц үгийн урт 6-аас доошгүй байна");
-    } else {
-      setPasswordLengthError("");
-      setError(false);
-    }
-  };
-
-  const passwordSameChecker = (val) => {
-    setPassword2(val);
-    if (password2 == "") {
-      setPasswordTypeError("");
-      setError(false);
-    } else if (password1 != val) {
-      setError(true);
-      setPasswordTypeError("Нууц үг ижил биш байна");
-    } else {
-      setPasswordTypeError("");
-      setError(false);
-    }
   };
 
   return (
@@ -102,62 +90,57 @@ const RegisterField = (props) => {
       <ScrollView scrollIndicatorInsets={false}>
         <View style={css.row}>
           <View style={css.wrapper}>
-            <MyInputField
-              placeholder="Хэрэглэгчийн нэр"
-              type="username"
-              value={firstName}
-              onChangeText={(val) => setFirstName(val)}
-              style={{ borderBottomWidth: 1 }}
-            />
-            <MyInputField
-              placeholder="Хэрэглэгчийн Овог"
-              type="username"
-              value={lastName}
-              onChangeText={(val) => setLastName(val)}
-              style={{ borderBottomWidth: 1 }}
-            />
-            <MyInputField
-              placeholder="Имэйл"
-              type="email-address"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={email}
-              onChangeText={(val) => emailChecker(val)}
-              error={error}
-              errorText={emailError}
-              style={{ borderBottomWidth: 1 }}
-            />
+            <Form>
+              <TextInput
+                placeholder="Хэрэглэгчийн нэр"
+                value={firstName}
+                returnKeyType="next"
+                onChangeText={(val) => setFirstName(val)}
+                style={css.input}
+              />
+              <TextInput
+                placeholder="Хэрэглэгчийн овог"
+                value={lastName}
+                returnKeyType="next"
+                onChangeText={(val) => setLastName(val)}
+                style={css.input}
+              />
+              <TextInput
+                placeholder="Имэйл"
+                value={email}
+                returnKeyType="next"
+                onChangeText={(val) => setEmail(val)}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                style={css.input}
+              />
+              <TextInput
+                placeholder="Утасны дугаар"
+                value={phone}
+                returnKeyType="next"
+                onChangeText={(val) => setPhone(val)}
+                style={css.input}
+                keyboardType="numeric"
+              />
+              <TextInput
+                placeholder="Нууц үг"
+                value={password1}
+                returnKeyType="next"
+                secureTextEntry={true}
+                onChangeText={(val) => setPassword1(val)}
+                style={css.input}
+              />
 
-            <MyInputField
-              placeholder="Утасны дугаар"
-              type="phone"
-              keyboardType="number-pad"
-              value={phone}
-              onChangeText={(val) => phoneChecker(val)}
-              error={error}
-              errorText={phoneError}
-              style={{ borderBottomWidth: 1 }}
-            />
-
-            <MyInputField
-              placeholder="Нууц үг"
-              type="password"
-              value={password1}
-              onChangeText={(val) => passwordLengthChecker(val)}
-              error={error}
-              errorText={passwordLengthError}
-              style={{ borderBottomWidth: 1 }}
-            />
-
-            <MyInputField
-              placeholder="Нууц үг давт"
-              type="password"
-              value={password2}
-              onChangeText={passwordSameChecker}
-              error={error}
-              errorText={passwordTypeError}
-              style={{ marginBottom: 10, borderBottomWidth: 1 }}
-            />
+              <TextInput
+                placeholder="Нууц үг давт"
+                value={password2}
+                returnKeyType="go"
+                secureTextEntry={true}
+                onChangeText={(val) => setPassword2(val)}
+                style={css.input2}
+                onSubmitEditing={handleRegister}
+              />
+            </Form>
           </View>
           {state.loading ? (
             <ActivityIndicator
@@ -166,11 +149,7 @@ const RegisterField = (props) => {
               style={css.loader}
             />
           ) : (
-            <MyButton
-              disabled={error}
-              iconName="arrowright"
-              onPress={handleRegister}
-            />
+            <MyButton iconName="arrowright" onPress={handleRegister} />
           )}
         </View>
         <View style={css.register}>
@@ -232,5 +211,26 @@ const css = StyleSheet.create({
     alignSelf: "center",
     lineHeight: 25,
     paddingHorizontal: 10,
+  },
+  input: {
+    fontSize: 16,
+    fontFamily: PRIMARY_FONT,
+    color: "#887F7F",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: "#887F7F",
+    width: "90%",
+    borderBottomWidth: 1,
+  },
+  input2: {
+    fontSize: 16,
+    fontFamily: PRIMARY_FONT,
+    color: "#887F7F",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: "#887F7F",
+    width: "90%",
+    borderBottomWidth: 1,
+    marginBottom: 20,
   },
 });
