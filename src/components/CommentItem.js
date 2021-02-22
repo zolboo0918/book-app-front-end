@@ -33,8 +33,6 @@ const CommentItem = (props) => {
     setPost(true);
   };
 
-  console.log("isEditAble", isEditable);
-
   return (
     <KeyboardAvoidingView
       style={css.writeComment}

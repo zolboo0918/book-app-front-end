@@ -20,8 +20,8 @@ import Toast from "react-native-toast-message";
 
 const LoginField = (props, ref) => {
   const state = useContext(UserContext);
-  const [emailValue, setEmailValue] = useState("zolboo412@gmail.com");
-  const [passwordValue, setPasswordValue] = useState("123456");
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
 
   const [error, setError] = useState(false);
   const [emailError, setEmailError] = useState("");

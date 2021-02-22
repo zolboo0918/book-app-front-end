@@ -15,6 +15,7 @@ import {
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
 import { validateEmail } from "../../constants";
+import Toast from "react-native-toast-message";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -26,12 +27,20 @@ const ForgetPassword = () => {
 
   const getCode = () => {
     if (email === "") {
-      Alert.alert("Имэйл оруулна уу");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Имэйл оруулна уу",
+        type: "error",
+      });
       return;
     }
 
     if (!validateEmail(email)) {
-      Alert.alert("Имэйл буруу байна");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Имэйл буруу байна",
+        type: "error",
+      });
       return;
     }
 
@@ -42,7 +51,6 @@ const ForgetPassword = () => {
       })
       .then((res) => {
         setLoading(false);
-        console.log("resss", res.data);
         if (res.data.success == true) {
           setEmailEntered(true);
         }
@@ -50,7 +58,11 @@ const ForgetPassword = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        Alert.alert("Алдаа гарлаа");
+        Toast.show({
+          text1: "Алдаа",
+          text2: err.response.data.error.message,
+          type: "error",
+        });
       });
   };
 
@@ -63,7 +75,6 @@ const ForgetPassword = () => {
       })
       .then((res) => {
         setLoading(false);
-        console.log("resss", res.data);
         if (res.data.success == true) {
           navigation.navigate("NewPassword", code);
         }
@@ -71,7 +82,11 @@ const ForgetPassword = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        Alert.alert("Код буруу байна");
+        Toast.show({
+          text1: "Алдаа",
+          text2: "Код буруу байна",
+          type: "error",
+        });
       });
   };
 

@@ -9,6 +9,7 @@ import UserContext from "../contexts/UserContext";
 import NoteDetails from "../screens/NoteDetails";
 import ForgetPassword from "../screens/ForgetPassword";
 import NewPassword from "../screens/NewPassword";
+import MyTopNavigator from "./MyTopNavigator";
 
 const Stack = createStackNavigator();
 export default () => {
@@ -33,6 +34,14 @@ export default () => {
           <Stack.Screen
             name="NoteDetails"
             component={NoteDetails}
+            options={{
+              headerShown: false,
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Notes"
+            component={MyTopNavigator}
             options={{
               headerShown: false,
               headerBackVisible: false,

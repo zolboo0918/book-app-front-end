@@ -8,7 +8,6 @@ import UserContext from "../contexts/UserContext";
 
 const MyDrawerContent = (props) => {
   const state = useContext(UserContext);
-  console.log("props", props);
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <DrawerContentScrollView {...props}>
@@ -45,7 +44,7 @@ const MyDrawerContent = (props) => {
           />
           <DrawerItem
             label="Номын тэмдэглэл"
-            onPress={() => props.navigation.navigate("UserInfo")}
+            onPress={() => props.navigation.navigate("Notes")}
           />
           <DrawerItem
             label="Хэрэглэгчийн мэдээлэл"

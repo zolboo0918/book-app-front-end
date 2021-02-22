@@ -12,6 +12,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
 
@@ -22,16 +23,22 @@ const NewPassword = (props) => {
 
   const navigation = useNavigation();
 
-  console.log("props", props);
-
   const changePassword = () => {
     if (password1 === "" || password2 === "") {
-      Alert.alert("Талбаруудыг бүрэн бөглөнө үү");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Талбаруудыг бүрэн бөглөнө үү",
+        type: "error",
+      });
       return;
     }
 
     if (password1 !== password2) {
-      Alert.alert("Нууц үг тохирохгүй байна");
+      Toast.show({
+        text1: "Алдаа",
+        text2: "Нууц үг тохирохгүй байна",
+        type: "error",
+      });
       return;
     }
 
@@ -44,17 +51,21 @@ const NewPassword = (props) => {
       .then((res) => {
         setLoading(false);
         if (res.data.success) {
-          Alert.alert("Нууц үг амжилттай шинэчлэгдлээ", "", [
-            { text: "", onPress: () => navigation.navigate("Login") },
-          ]);
+          navigation.navigate("Login");
+          Toast.show({
+            text1: "Амжилттай",
+            text2: "Нууц үг амжилттай шинэчлэгдлээ",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        Alert.alert("Амжилтгүй", "", [
-          { text: "", onPress: () => navigation.navigate("Login") },
-        ]);
+        Toast.show({
+          text1: "Амжилтгүй",
+          text2: err.response.data.error.message,
+          type: "error",
+        });
       });
   };
 
