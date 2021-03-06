@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -13,7 +14,7 @@ import UserContext from "../contexts/UserContext";
 import MyInputField from "./MyInputField";
 import MyButton from "./MyLoginButton";
 import { PRIMARY_FONT, validateEmail } from "../../constants";
-import { Form, TextInput } from "react-native-autofocus";
+import { Form } from "react-native-autofocus";
 import Toast from "react-native-toast-message";
 
 const RegisterField = (props) => {

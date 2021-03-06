@@ -1,9 +1,7 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../contexts/UserContext";
+import { useEffect, useState } from "react";
 
 export default () => {
-  const [data, setData] = useState([]);
   const [newbooks, setNewbooks] = useState([]);
   const [topRatedBook, setTopRatedBook] = useState([]);
   const [bestSeller, setBestSeller] = useState([]);

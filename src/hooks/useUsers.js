@@ -68,7 +68,6 @@ export default () => {
       .then((res) => {
         setLoading(false);
         setSuccess(true);
-        console.log("resssssss", res.data);
       })
       .catch((err) => {
         console.log("err=>", err);

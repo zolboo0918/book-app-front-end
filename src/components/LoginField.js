@@ -1,31 +1,24 @@
-import React, {
-  useContext,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Form } from "react-native-autofocus";
+
+import Toast from "react-native-toast-message";
+import { PRIMARY_FONT, validateEmail } from "../../constants";
 import UserContext from "../contexts/UserContext";
 import MyButton from "./MyLoginButton";
-import { PRIMARY_FONT, validateEmail } from "../../constants";
-import { useNavigation } from "@react-navigation/native";
-import { Form, TextInput } from "react-native-autofocus";
-import Toast from "react-native-toast-message";
 
-const LoginField = (props, ref) => {
+const LoginField = () => {
   const state = useContext(UserContext);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-
-  const [error, setError] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
 
   const navigation = useNavigation();
 
@@ -172,5 +165,6 @@ const css = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderBottomColor: "#887F7F",
+    width: "90%",
   },
 });

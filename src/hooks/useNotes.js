@@ -49,7 +49,6 @@ export default () => {
           headers: { Authorization: `Bearer ${state.token}` },
         })
         .then((res) => {
-          console.log("Тэмдэглэл амжилттай", res.data.data);
           setSuccessPosted(true);
           setNotes((notes) => [...notes, res.data.data]);
           setLoading(false);
@@ -71,7 +70,6 @@ export default () => {
           headers: { Authorization: `Bearer ${state.token}` },
         })
         .then((res) => {
-          console.log("Aмжилттай", res.data.data);
           setSuccessPosted(true);
           setNotes(notes.filter((el) => el._id !== res.data.data._id));
           setLoading(false);

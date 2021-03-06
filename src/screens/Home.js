@@ -1,13 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import BookGroup from "../components/BookGroup";
 import ConfirmModal from "../components/ConfirmModal";
 import TopBar from "../components/TopBar";
 import UserContext from "../contexts/UserContext";
 import useCategories from "../hooks/useCategories";
-import Toast from "react-native-toast-message";
 
 export default function Home(props) {
   const [confirmModalShow, setConfirmModalShow] = useState(false);
@@ -36,7 +34,7 @@ export default function Home(props) {
 
       <ScrollView style={css.container}>
         <BookGroup title="Эрэлт ихтэй номууд" data={bestSeller} />
-        <BookGroup title="Шинэ номууд" data={newbooks} />
+        <BookGroup title="Сүүлд нэмэгдсэн номууд" data={newbooks} />
         <BookGroup title="Үнэлгээ өндөр номууд" data={topRatedBook} />
       </ScrollView>
 
