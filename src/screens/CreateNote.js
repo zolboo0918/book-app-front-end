@@ -1,6 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import MyNoteButton from "../components/MyNoteButton";
@@ -21,11 +28,50 @@ const CreateNote = () => {
     successPosted,
     writeNote,
     deleteNote,
+    getNotes,
+    editNote,
   ] = useNotes();
 
   const state = useContext(UserContext);
 
   const postNote = () => {
+    if (title === "") {
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: "Та гарчиг оруулна уу",
+        type: "error",
+        position: "top",
+      });
+      return;
+    }
+    if (authorName === "") {
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: "Та зохиогчийн нэрийг оруулна уу",
+        type: "error",
+        position: "top",
+      });
+      return;
+    }
+    if (bookName === "") {
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: "Та номын нэрийг оруулна уу",
+        type: "error",
+        position: "top",
+      });
+      return;
+    }
+    if (note === "") {
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: "Та тэмдэглэл оруулна уу",
+        type: "error",
+        position: "top",
+      });
+      return;
+    }
+
     const body = {
       title,
       note,
@@ -34,10 +80,23 @@ const CreateNote = () => {
       authorName,
     };
     writeNote(body);
+    if (!successPosted) {
+      navigation.navigate("Бичсэн тэмдэглэлүүд");
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: { error },
+        type: "error",
+        position: "top",
+      });
+      setBookName("");
+      setAuthorName("");
+      setTitle("");
+      setNote("");
+    }
     if (successPosted) {
       navigation.navigate("Бичсэн тэмдэглэлүүд");
       Toast.show({
-        text1: "Амижилттай",
+        text1: "Амжилттай",
         text2: "Та refresh хийнэ үү",
         type: "success",
         position: "top",
@@ -50,52 +109,54 @@ const CreateNote = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={css.container}>
-        <View style={css.row}>
-          <Text style={css.title}>Номын нэр:</Text>
+    <KeyboardAvoidingView behavior="height">
+      <ScrollView>
+        <View style={css.container}>
+          <View style={css.row}>
+            <Text style={css.title}>Номын нэр:</Text>
+            <TextInput
+              style={css.input}
+              autoCorrect={false}
+              value={bookName}
+              onChangeText={setBookName}
+            />
+          </View>
+          <View style={css.row}>
+            <Text style={css.title}>Номын зохиолч:</Text>
+            <TextInput
+              style={css.input}
+              autoCorrect={false}
+              value={authorName}
+              onChangeText={setAuthorName}
+            />
+          </View>
+          <View style={css.row}>
+            <Text style={css.title}>Гарчиг:</Text>
+            <TextInput
+              style={css.input}
+              autoCorrect={false}
+              value={title}
+              onChangeText={setTitle}
+            />
+          </View>
+          <View style={css.row}>
+            <Text style={css.title}>Тэмдэглэл:</Text>
+          </View>
           <TextInput
-            style={css.input}
+            style={css.note}
+            multiline={true}
+            textAlignVertical="top"
             autoCorrect={false}
-            value={bookName}
-            onChangeText={setBookName}
+            value={note}
+            onChangeText={setNote}
           />
+          <View style={css.bottom}>
+            <MyNoteButton title="Буцах" onPress={() => navigation.goBack()} />
+            <MyNoteButton title="Хадгалах" onPress={postNote} />
+          </View>
         </View>
-        <View style={css.row}>
-          <Text style={css.title}>Номын зохиолч:</Text>
-          <TextInput
-            style={css.input}
-            autoCorrect={false}
-            value={authorName}
-            onChangeText={setAuthorName}
-          />
-        </View>
-        <View style={css.row}>
-          <Text style={css.title}>Гарчиг:</Text>
-          <TextInput
-            style={css.input}
-            autoCorrect={false}
-            value={title}
-            onChangeText={setTitle}
-          />
-        </View>
-        <View style={css.row}>
-          <Text style={css.title}>Тэмдэглэл:</Text>
-        </View>
-        <TextInput
-          style={css.note}
-          multiline={true}
-          textAlignVertical="top"
-          autoCorrect={false}
-          value={note}
-          onChangeText={setNote}
-        />
-        <View style={css.bottom}>
-          <MyNoteButton title="Буцах" onPress={() => navigation.goBack()} />
-          <MyNoteButton title="Хадгалах" onPress={postNote} />
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

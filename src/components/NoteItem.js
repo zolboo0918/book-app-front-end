@@ -29,6 +29,7 @@ const NoteItem = (props) => {
               autoCorrect={false}
               editable={false}
               value={props.data.note}
+              maxHeight={100}
             />
             <View style={css.bottom}>
               <View style={css.author}>
@@ -56,7 +57,6 @@ const css = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "10%",
   },
   outer: {
     width: "80%",
@@ -81,6 +81,7 @@ const css = StyleSheet.create({
     fontFamily: PRIMARY_FONT,
     fontSize: 16,
     color: "black",
+    marginHorizontal: 30,
   },
   bottom: {
     flexDirection: "row",

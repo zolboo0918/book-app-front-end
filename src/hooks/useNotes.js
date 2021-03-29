@@ -54,8 +54,8 @@ export default () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log("error=>", error.message);
-          setError(error.message);
+          console.log("error=>", err);
+          setError(err);
         });
     } catch (error) {
       console.log("error->", error);
