@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import {
   ImageBackground,
   StatusBar,
@@ -8,13 +8,8 @@ import {
 } from "react-native";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import LoginField from "../components/LoginField";
-import UserContext from "../contexts/UserContext";
 
 export default function Login({ navigation }) {
-  const handleRegister = () => {
-    navigation.navigate("Register");
-  };
-
   return (
     <View style={css.container}>
       <StatusBar barStyle="default" translucent={false} />
@@ -50,7 +45,6 @@ const css = StyleSheet.create({
     fontFamily: PRIMARY_FONT,
     fontSize: 35,
     textAlign: "center",
-    // textAlignVertical: "center",
     marginTop: "50%",
   },
 });

@@ -4,7 +4,7 @@
     "slug": "bookNoteApp",
     "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/icon2.png",
+    "icon": "./assets/icon3.png",
     "splash": {
       "image": "./assets/splash3.png",
       "resizeMode": "contain",
@@ -17,7 +17,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.zolboo.bookapp",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.2",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.930248550113-h8c32um6erejqklrsk2rq8s5i0jm1jmo"
+        }
+      }
     },
     "android": {
       "versionCode": 3,

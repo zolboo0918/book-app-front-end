@@ -53,7 +53,6 @@ const NoteDetails = (props) => {
         position: "top",
       });
       navigation.goBack();
-      // setSuccessModalShow(true);
     }
     setEditClicked(false);
   };

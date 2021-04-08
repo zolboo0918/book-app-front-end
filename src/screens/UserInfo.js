@@ -37,6 +37,7 @@ const UserInfo = () => {
 
   const [
     userData,
+    error,
     success,
     loading,
     getUserInfo,
@@ -76,7 +77,19 @@ const UserInfo = () => {
       return;
     }
     if (newPassword !== newPassword2) {
-      Alert.alert("Нууц үг тохирохгүй байна");
+      Toast.show({
+        text1: "Нууц үг тохирохгүй байна.",
+        type: "error",
+        position: "top",
+      });
+      return;
+    }
+    if (newPassword.length < 6) {
+      Toast.show({
+        text1: "Нууц үгийн урт 6-аас дээш байна.",
+        type: "error",
+        position: "top",
+      });
       return;
     }
     changePassword(oldPassword, newPassword);
@@ -88,6 +101,12 @@ const UserInfo = () => {
       setOldPassword("");
       setNewPassword("");
       setNewPassword2("");
+    } else {
+      Toast.show({
+        text1: "Амжилтгүй",
+        text2: error,
+        type: "error",
+      });
     }
   };
 

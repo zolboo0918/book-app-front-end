@@ -24,7 +24,6 @@ export default () => {
           { headers: { Authorization: `Bearer ${state.token}` } }
         )
         .then((res) => {
-          //   console.log(res.data.data);
           setNotes(res.data.data);
           setLoading(false);
           setSuccessPosted(true);

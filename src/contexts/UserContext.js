@@ -30,7 +30,11 @@ export const UserStore = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(
+          err.response.data.error.message
+            ? err.response.data.error.message
+            : err
+        );
         setIsLoggedIn(false);
         setLoading(false);
         Toast.show({

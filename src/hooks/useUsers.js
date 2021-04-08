@@ -7,6 +7,7 @@ export default () => {
   const [userData, setUserData] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     getUserInfo();
@@ -32,6 +33,12 @@ export default () => {
       })
       .catch((err) => {
         console.log(err);
+        setSuccess(false);
+        setError(
+          err.response.data.error.message
+            ? err.response.data.error.message
+            : err
+        );
         setLoading(false);
       });
   };
@@ -53,11 +60,18 @@ export default () => {
       })
       .catch((err) => {
         console.log(err);
+        setSuccess(false);
         setLoading(false);
+        setError(
+          err.response.data.error.message
+            ? err.response.data.error.message
+            : err
+        );
       });
   };
 
   const changePassword = (oldPassword, newPassword) => {
+    debugger;
     setLoading(true);
     axios
       .post(
@@ -70,13 +84,20 @@ export default () => {
         setSuccess(true);
       })
       .catch((err) => {
-        console.log("err=>", err);
+        setSuccess(false);
         setLoading(false);
+        console.log("error=>", err.response.data.error.message);
+        setError(
+          err.response.data.error.message
+            ? err.response.data.error.message
+            : err
+        );
       });
   };
 
   return [
     userData,
+    error,
     success,
     loading,
     getUserInfo,

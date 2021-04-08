@@ -48,6 +48,7 @@ const LoginField = () => {
       return;
     }
     state.login(emailValue.toLowerCase().trim(), passwordValue.trim());
+    setPasswordValue("");
   };
 
   return (

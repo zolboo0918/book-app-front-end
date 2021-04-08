@@ -63,7 +63,6 @@ const css = StyleSheet.create({
     fontWeight: "700",
   },
   publisher: {
-    // fontFamily: PRIMARY_FONT,
     fontSize: 11,
     top: 20,
   },

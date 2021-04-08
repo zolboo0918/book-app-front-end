@@ -48,6 +48,7 @@ const CommentItem = (props) => {
           style={css.comment}
           defaultValue={comment}
           editable={isEditable}
+          multiline={true}
           autoCorrect={false}
           autoCapitalize="none"
           onChangeText={(val) => props.onChangeText(val)}
@@ -131,6 +132,8 @@ const css = StyleSheet.create({
     width: "100%",
   },
   userIcon: {
+    alignSelf: "flex-start",
+    marginTop: 8,
     width: "20%",
     alignItems: "center",
     justifyContent: "center",
@@ -155,13 +158,15 @@ const css = StyleSheet.create({
     fontSize: 11,
   },
   delete: {
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 10,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     marginHorizontal: 5,
   },
   myButton: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "flex-end",
     marginLeft: "10%",
+    marginTop: 10,
   },
 });

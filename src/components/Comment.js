@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
 import { PRIMARY_FONT } from "../../constants";
 import UserContext from "../contexts/UserContext";
 import useComment from "../hooks/useComment";
@@ -28,6 +29,19 @@ const Comment = (props) => {
     updateComment,
   ] = useComment(props.id, props.comment, props.isForeign);
 
+  const handleWritecomment = () => {
+    if (writedComment == "") {
+      Toast.show({
+        type: "error",
+        text1: "Амжилтгүй",
+        text2: "Сэтгэгдэл бичигдээгүй байна.",
+        position: "top",
+      });
+      return;
+    }
+    writeComment();
+  };
+
   return (
     <View style={css.container}>
       <Text style={css.title}>Сэтгэгдлүүд</Text>
@@ -41,7 +55,7 @@ const Comment = (props) => {
           }}
           value={writedComment}
         />
-        <MySendButton onPress={writeComment} iconName="paper-plane" />
+        <MySendButton onPress={handleWritecomment} iconName="paper-plane" />
       </View>
       {loading ? (
         <ActivityIndicator size="large" color="##3A8096" style={css.loader} />

@@ -1,7 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
-// import data from "../data/book";
 import BookItem from "./BookItem";
 
 const BookGroup = ({ title, data }) => {

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import BookGroup from "../components/BookGroup";
 import ConfirmModal from "../components/ConfirmModal";
 import TopBar from "../components/TopBar";

@@ -165,7 +165,5 @@ const css = StyleSheet.create({
   },
   loader: {
     marginTop: "50%",
-    // alignSelf: "center",
-    // justifyContent: "center",
   },
 });

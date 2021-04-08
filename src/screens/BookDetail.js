@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -9,18 +9,23 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 import StarRating from "react-native-star-rating-new";
-import { PRIMARY_FONT } from "../../constants";
+import { PRIMARY_COLOR, PRIMARY_FONT } from "../../constants";
 import Comment from "../components/Comment";
+import RatingBottomModal from "../components/RatingBottomModal";
 import TopBar from "../components/TopBar";
 import UserContext from "../contexts/UserContext";
 
 const BookDetail = (props) => {
   const [comment, setComment] = useState([]);
+  const [givingRate, setGivingRate] = useState(0);
   const navigation = useNavigation();
   const state = useContext(UserContext);
+  const ratingRef = useRef();
 
   if (!props.route.params.item) {
     return;
@@ -62,6 +67,14 @@ const BookDetail = (props) => {
     }
   }, []);
 
+  const rate = () => {
+    ratingRef.current.open();
+  };
+
+  const handleRating = (val) => {
+    setGivingRate(val);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "position" : "padding"}
@@ -101,6 +114,30 @@ const BookDetail = (props) => {
           <Text style={css.description}>{description}</Text>
         </View>
 
+        <TouchableOpacity onPress={rate}>
+          <Text style={css.rating}>Үнэлгээ өгөх</Text>
+          <RBSheet
+            ref={ratingRef}
+            height={250}
+            animationType="fade"
+            closeOnDragDown={true}
+            closeOnPressMask={false}
+            customStyles={{
+              container: {
+                borderTopRightRadius: 40,
+                borderTopLeftRadius: 40,
+              },
+            }}
+          >
+            <RatingBottomModal
+              id={_id}
+              rating={givingRate}
+              onSelectStar={handleRating}
+              onHide={() => ratingRef.current.close()}
+            />
+          </RBSheet>
+        </TouchableOpacity>
+
         <Comment comments={comment} id={_id} isForeign={isForeign} />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -139,5 +176,12 @@ const css = StyleSheet.create({
   },
   description: {
     textAlign: "justify",
+  },
+  rating: {
+    alignSelf: "flex-end",
+    marginTop: "5%",
+    color: PRIMARY_COLOR,
+    fontSize: 15,
+    fontFamily: PRIMARY_FONT,
   },
 });
